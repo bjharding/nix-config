@@ -7,8 +7,7 @@
     # If you want to use home-manager modules from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModule
 
-    # You can also split up your configuration and import pieces of it here:
-    # ./nvim.nix
+    ./zsh/zsh.nix
   ];
 
   nixpkgs = {
@@ -33,7 +32,6 @@
     };
   };
 
-  # TODO: Set your username
   home = {
     username = "ben";
     homeDirectory = "/home/ben";
@@ -42,35 +40,6 @@
   # Add stuff for your user as you see fit:
   # programs.neovim.enable = true;
   # home.packages = with pkgs; [ steam ];
-  home.file.".zsh-themes" = {
-    source = ./zsh-themes;
-    recursive = true;
-  };
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    oh-my-zsh = {
-      enable = true;
-      plugins = [
-        "git"
-        "z"
-      ];
-      custom = "$HOME/.zsh-themes";
-      theme = "agnoster-nix";
-    };
-    plugins = [
-      {
-        name = "zsh-nix-shell";
-        file = "nix-shell.plugin.zsh";
-        src = pkgs.fetchFromGitHub {
-          owner = "chisui";
-          repo = "zsh-nix-shell";
-          rev = "v0.5.0";
-          sha256 = "0za4aiwwrlawnia4f29msk822rj9bgcygw6a8a6iikiwzjjz0g91";
-        };
-      }
-    ];
-  };
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
