@@ -7,6 +7,12 @@
   programs.zsh = {
     enable = true;
     enableCompletion = true;
+    shellAliases = {
+      cat = "bat";
+      ls = "exa";
+      ll = "exa -l";
+      la = "exa -la";
+    };
     oh-my-zsh = {
       enable = true;
       plugins = [
@@ -16,6 +22,7 @@
       custom = "$HOME/.zsh-themes";
       theme = "agnoster-nix";
     };
+    
     plugins = [
       {
         name = "zsh-nix-shell";
