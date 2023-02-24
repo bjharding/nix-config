@@ -6,8 +6,9 @@
   imports = [
     # If you want to use home-manager modules from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModule
-    ./nvim/neovim.nix
-    ./zsh/zsh.nix
+    ./config/nvim/neovim.nix
+    ./config/tmux/tmux.nix
+    ./config/zsh/zsh.nix
   ];
 
   nixpkgs = {
@@ -46,7 +47,6 @@
     wget
     ncdu
     fd
-    tmux
     jq
     go
     tree
@@ -57,6 +57,17 @@
     bc
     exa
     nixfmt
+    cht-sh
+    lazygit
+    fzf
+    act
+    colordiff
+    file
+    spotify-tui
+    openssh
+    yj
+    yq
+    lazydocker
   ];
 
   # Enable home-manager and git
