@@ -7,9 +7,9 @@
     # If you want to use home-manager modules from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModule
     ./config/git
-    ./config/nvim/neovim.nix
-    ./config/tmux/tmux.nix
-    ./config/zsh/zsh.nix
+    ./config/nvim
+    ./config/tmux
+    ./config/zsh
   ];
 
   nixpkgs = {
