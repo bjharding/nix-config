@@ -7,7 +7,7 @@
     # If you want to use home-manager modules from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModule
     ./config/git
-    ./config/nvim
+#    ./config/nvim
     ./config/tmux
     ./config/zsh
   ];
@@ -43,11 +43,13 @@
   # programs.neovim.enable = true;
   home.packages = with pkgs; [
     ripgrep
+    firefox
     fzf
     netcat
     wget
     ncdu
     fd
+    neovim
     jq
     go
     tree
