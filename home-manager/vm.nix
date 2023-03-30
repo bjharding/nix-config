@@ -6,6 +6,7 @@
   imports = [
     # If you want to use home-manager modules from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModule
+    ./config/alacritty
     ./config/git
 #    ./config/nvim
     ./config/tmux
@@ -71,6 +72,8 @@
     yj
     yq
     lazydocker
+    neofetch
+    steam
   ];
 
   # Enable home-manager and git
