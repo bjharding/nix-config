@@ -6,11 +6,11 @@
   imports = [
     # If you want to use home-manager modules from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModule
-    ./config/alacritty
+    ./features/cli
+    ./features/productivity
     ./config/git
 #    ./config/nvim
     ./config/tmux
-    ./config/zsh
   ];
 
   nixpkgs = {
@@ -43,35 +43,20 @@
   # Add stuff for your user as you see fit:
   # programs.neovim.enable = true;
   home.packages = with pkgs; [
-    ripgrep
     firefox
-    fzf
     netcat
     wget
-    ncdu
-    fd
     neovim
-    jq
     go
-    tree
-    htop
     docker
     docker-compose
-    bat
-    bc
-    exa
     nixfmt
-    cht-sh
-    lazygit
-    fzf
     act
     colordiff
-    file
     spotify-tui
     openssh
     yj
     yq
-    lazydocker
     neofetch
     steam
   ];
