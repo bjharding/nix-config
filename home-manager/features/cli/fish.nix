@@ -39,6 +39,7 @@
       # Clear screen and scrollback
       clear = "printf '\\033[2J\\033[3J\\033[1;1H'";
       cat = "bat";
+      tree = "exa -T";
     };
     functions = {
       fish_greeting = "";

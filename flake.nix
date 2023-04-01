@@ -12,13 +12,18 @@
     neovim-nightly-overlay.inputs.nixpkgs.follows = "nixpkgs";
     neovim-plugins.url = "github:LongerHV/neovim-plugins-overlay";
     neovim-plugins.inputs.nixpkgs.follows = "nixpkgs";
+
+    fish-bobthefish-theme = {
+      url = github:gvolpe/theme-bobthefish;
+      flake = false;
+    };
+
   };
 
   outputs =
     { self
     , nixpkgs
     , nixpkgs-unstable
-    , nixos-hardware
 #    , flake-utils
     , home-manager
     , neovim-nightly-overlay

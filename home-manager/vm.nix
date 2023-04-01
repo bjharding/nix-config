@@ -8,7 +8,6 @@
     # inputs.nix-colors.homeManagerModule
     ./features/cli
     ./features/productivity
-    ./config/git
 #    ./config/nvim
     ./config/tmux
   ];
@@ -57,7 +56,6 @@
     openssh
     yj
     yq
-    neofetch
     steam
   ];
 

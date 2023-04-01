@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   imports = [
     ./bat.nix
-    ./fish.nix
+    ./fish
     ./git.nix
     ./starship.nix
   ];
@@ -17,10 +17,9 @@
     jq # JSON parsing
     lazydocker # docker tui
     lazygit # git tui
+    neofetch # system info
     ncdu # disk usage tui
     ranger # file manager
     ripgrep # better grep
-    tree # tree
   ];
-
 }
