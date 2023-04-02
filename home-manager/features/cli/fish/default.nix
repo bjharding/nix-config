@@ -47,7 +47,7 @@ in
       ls = "${pkgs.exa}/bin/exa";
       ll = "ls -a";
       ".." = "cd ..";
-#      ping = "${pkgs.prettyping}/bin/prettyping";
+      ping = "${pkgs.prettyping}/bin/prettyping";
       tree = "${pkgs.exa}/bin/exa -T";
 #      xdg-open = "${pkgs.mimeo}/bin/mimeo";
     };

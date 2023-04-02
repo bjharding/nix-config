@@ -110,9 +110,12 @@
         i3status # gives you the default i3 status bar
         i3lock #default i3 screen locker
         i3blocks #if you are planning on using i3blocks over i3status
-     ];
+      ];
+      configFile = "/etc/i3.conf";
     };
   };
+  environment.etc."i3.conf".text = pkgs.callPackage ./i3-config.nix {};
+
 
   users.users = {
     ben = {
@@ -126,6 +129,7 @@
       ];
       # TODO: Be sure to add any other groups you need (such as networkmanager, audio, docker, etc)
       extraGroups = [ "networkmanager" "wheel" ];
+      shell = pkgs.fish;
     };
   };
 

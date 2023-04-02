@@ -6,9 +6,11 @@
     ./starship.nix
   ];
   home.packages = with pkgs; [
+    alacritty # terminal
     bc # calulator
     bottom # system viewer
     cht-sh # cheat.sh
+    direnv # ??
     exa # better ls
     htop # better top
     httpie # better curl
@@ -19,6 +21,7 @@
     lazygit # git tui
     neofetch # system info
     ncdu # disk usage tui
+    prettyping # ping
     ranger # file manager
     ripgrep # better grep
   ];

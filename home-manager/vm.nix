@@ -57,6 +57,7 @@
     yj
     yq
     steam
+    direnv
   ];
 
   # Enable home-manager and git
