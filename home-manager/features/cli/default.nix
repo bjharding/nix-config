@@ -1,12 +1,12 @@
 { pkgs, ... }: {
   imports = [
+    ./alacritty.nix
     ./bat.nix
     ./fish
     ./git.nix
     ./starship.nix
   ];
   home.packages = with pkgs; [
-    alacritty # terminal
     bc # calulator
     bottom # system viewer
     cht-sh # cheat.sh

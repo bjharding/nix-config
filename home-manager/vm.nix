@@ -7,6 +7,7 @@
     # If you want to use home-manager modules from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModule
     ./features/cli
+    ./features/browser/firefox.nix
     ./features/productivity
 #    ./config/nvim
     ./config/tmux
@@ -42,6 +43,7 @@
   # Add stuff for your user as you see fit:
   # programs.neovim.enable = true;
   home.packages = with pkgs; [
+    any-nix-shell
     firefox
     netcat
     wget

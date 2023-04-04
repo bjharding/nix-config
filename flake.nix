@@ -2,7 +2,8 @@
   description = "My config";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
+#    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
+    nixpkgs.url = "github:nixos/nixpkgs/7f5639fa3b68054ca0b062866dc62b22c3f11505";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     hardware.url = "github:NixOS/nixos-hardware/master";
 #    flake-utils.url = "github:numtide/flake-utils";
@@ -18,6 +19,7 @@
       flake = false;
     };
 
+    firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
   };
 
   outputs =
