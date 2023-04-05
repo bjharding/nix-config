@@ -9,7 +9,7 @@
     ./features/cli
     ./features/browser/firefox.nix
     ./features/productivity
-#    ./config/nvim
+    ./features/cli/nvim
     ./config/tmux
   ];
 
@@ -47,7 +47,7 @@
     firefox
     netcat
     wget
-    neovim
+#    neovim
     go
     docker
     docker-compose
