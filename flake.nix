@@ -6,7 +6,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/7f5639fa3b68054ca0b062866dc62b22c3f11505";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     hardware.url = "github:NixOS/nixos-hardware/master";
-#    flake-utils.url = "github:numtide/flake-utils";
+    flake-utils.url = "github:numtide/flake-utils";
     home-manager.url = "github:nix-community/home-manager/release-22.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 #    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
@@ -26,7 +26,7 @@
     { self
     , nixpkgs
     , nixpkgs-unstable
-#    , flake-utils
+    , flake-utils
     , home-manager
     , neovim-nightly-overlay
     , neovim-plugins
@@ -36,7 +36,7 @@
       inherit (self) outputs;
       forEachSystem = nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-linux" ];
       forEachPkgs = f: forEachSystem (sys: f nixpkgs.legacyPackages.${sys});
-#      forAllSystems = nixpkgs.lib.genAttrs flake-utils.lib.defaultSystems;
+      forAllSystems = nixpkgs.lib.genAttrs flake-utils.lib.defaultSystems;
     in
     {
       overlays = import ./overlays { inherit inputs outputs; };
@@ -53,17 +53,17 @@
       nixosModules = import ./modules/nixos;
       homeManagerModules = import ./modules/home-manager;
 
-#      devShells = forAllSystems
-#        (system: {
-#          default = nixpkgs.legacyPackages.${system}.callPackage ./shell.nix { };
+      devShells = forAllSystems
+        (system: {
+          default = nixpkgs.legacyPackages.${system}.callPackage ./shell.nix { };
 #          lint = nixpkgs.legacyPackages.${system}.callPackage
 #            ({ pkgs, ... }: pkgs.mkShellNoCC {
 #              nativeBuildInputs = with pkgs; [ actionlint selene statix nixpkgs-fmt yamllint ];
 #            })
 #            { };
-#        });
+        });
 
-      devShells = forEachPkgs (pkgs: import ./shell.nix { inherit pkgs; });
+#      devShells = forEachPkgs (pkgs: import ./shell.nix { inherit pkgs; });
 
 #      formatter = forAllSystems (system: nixpkgs.legacyPackages."${system}".nixpkgs-fmt);
 

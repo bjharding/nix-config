@@ -1,132 +1,77 @@
 { pkgs, ... }:
-let
-  nix-inspect = pkgs.writeShellScriptBin "nix-inspect" ''
-    read -ra EXCLUDED <<< "$@"
-
-    IFS=":" read -ra PATHS <<< "$PATH"
-
-    read -ra PROGRAMS <<< \
-      "$(printf "%s\n" "''${PATHS[@]}" | ${pkgs.gnugrep}/bin/grep "\/nix\/store" | ${pkgs.gnugrep}/bin/grep -v "\-man" | ${pkgs.perl}/bin/perl -pe 's/^\/nix\/store\/\w{32}-([^\/]*)\/bin$/\1/' | ${pkgs.findutils}/bin/xargs)"
-
-    for to_remove in "''${EXCLUDED[@]}"; do
-        to_remove_full="$(printf "%s\n" "''${PROGRAMS[@]}" | grep "$to_remove" )"
-        PROGRAMS=("''${PROGRAMS[@]/$to_remove_full}")
-    done
-
-    read -ra PROGRAMS <<< "''${PROGRAMS[@]}"
-    echo "''${PROGRAMS[@]}"
-  '';
-in
 {
   programs.starship = {
     enable = true;
     settings = {
       format =
-        let
-          git = "$git_branch$git_commit$git_state$git_status";
-          cloud = "$aws$gcloud$openstack";
-        in
         ''
-          $username$hostname($shlvl)($cmd_duration) $fill ($nix_shell)$custom
-          $directory(${git})(- ${cloud}) $fill $time
-          $jobs$character
+        [](#9A348E)$os$username[](bg:#DA627D fg:#9A348E)$directory[](fg:#DA627D bg:#FCA17D)$git_branch$git_status[](fg:#FCA17D bg:#86BBD8)$c$elixir$elm$golang$gradle$haskell$java$julia$nodejs$nim$rust$scala[](fg:#86BBD8 bg:#06969A)$docker_context[](fg:#06969A bg:#33658A)$time[ ](fg:#33658A)
         '';
-
-      fill = {
-        symbol = " ";
-        disabled = false;
-      };
 
       # Core
       username = {
-        format = "[$user]($style)";
         show_always = true;
-      };
-      hostname = {
-        format = "[@$hostname]($style) ";
-        ssh_only = false;
-        style = "bold green";
-      };
-      shlvl = {
-        format = "[$shlvl]($style) ";
-        style = "bold cyan";
-        threshold = 2;
-        repeat = true;
+        style_user = "bg:#9A348E";
+        style_root = "bg:#9A348E";
+        format = "[$user ]($style)";
         disabled = false;
       };
-      cmd_duration = {
-        format = "took [$duration]($style) ";
+      os = {
+        style = "bg:#9A348E";
+        disabled = true;
       };
-
       directory = {
-        format = "[$path]($style)( [$read_only]($read_only_style)) ";
+        style = "bg:#DA627D";
+        format = "[ $path ]($style)";
+        truncation_length = 3;
+        truncation_symbol = "…/";
       };
-      nix_shell = {
-        format = "[($name \\(develop\\) <- )$symbol]($style) ";
-        impure_msg = "";
+      c = {
+        symbol = " ";
+        style = "bg:#86BBD8";
+        format = "[ $symbol ($version) ]($style)";
+      };
+      docker_context = {
+        symbol = " ";
+        style = "bg:#06969A";
+        format = "[ $symbol $context ]($style) $path";
+      };
+      git_branch = {
+        symbol = "";
+        style = "bg:#FCA17D";
+        format = "[ $symbol $branch ]($style)";
+      };
+      git_status = {
+        style = "bg:#FCA17D";
+        format = "[$all_status$ahead_behind ]($style)";
+      };
+      golang = {
+        symbol = " ";
+        style = "bg:#86BBD8";
+        format = "[ $symbol ($version) ]($style)";
+      };
+      
+      nim = {
         symbol = " ";
-        style = "bold red";
+        style = "bg:#86BBD8";
+        format = "[ $symbol ($version) ]($style)";
       };
-      custom = {
-        nix_inspect = {
-          disabled = false;
-          when = "test -z $IN_NIX_SHELL";
-          command = "${nix-inspect}/bin/nix-inspect kitty imagemagick ncurses";
-          format = "[($output <- )$symbol]($style) ";
-          symbol = " ";
-          style = "bold blue";
-        };
+      nodejs = {
+        symbol = "";
+        style = "bg:#86BBD8";
+        format = "[ $symbol ($version) ]($style)";
       };
-
-      character = {
-        error_symbol = "[~~>](bold red)";
-        success_symbol = "[->>](bold green)";
-        vimcmd_symbol = "[<<-](bold yellow)";
-        vimcmd_visual_symbol = "[<<-](bold cyan)";
-        vimcmd_replace_symbol = "[<<-](bold purple)";
-        vimcmd_replace_one_symbol = "[<<-](bold purple)";
+      rust = {
+        symbol = "";
+        style = "bg:#86BBD8";
+        format = "[ $symbol ($version) ]($style)";
       };
-
       time = {
-        format = "\\\[[$time]($style)\\\]";
         disabled = false;
+        time_format = "%R"; # Hour:Minute Format
+        style = "bg:#33658A";
+        format = "[ ♥ $time ]($style)";
       };
-
-      # Cloud
-      gcloud = {
-        format = "on [$symbol$active(/$project)(\\($region\\))]($style)";
-      };
-      aws = {
-        format = "on [$symbol$profile(\\($region\\))]($style)";
-      };
-
-      # Icon changes only \/
-      aws.symbol = "  ";
-      conda.symbol = " ";
-      dart.symbol = " ";
-      directory.read_only = " ";
-      docker_context.symbol = " ";
-      elixir.symbol = " ";
-      elm.symbol = " ";
-      gcloud.symbol = " ";
-      git_branch.symbol = " ";
-      golang.symbol = " ";
-      hg_branch.symbol = " ";
-      java.symbol = " ";
-      julia.symbol = " ";
-      memory_usage.symbol = " ";
-      nim.symbol = " ";
-      nodejs.symbol = " ";
-      package.symbol = " ";
-      perl.symbol = " ";
-      php.symbol = " ";
-      python.symbol = " ";
-      ruby.symbol = " ";
-      rust.symbol = " ";
-      scala.symbol = " ";
-      shlvl.symbol = "";
-      swift.symbol = "ﯣ ";
-      terraform.symbol = "行";
     };
   };
 }

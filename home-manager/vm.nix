@@ -9,7 +9,7 @@
     ./features/cli
     ./features/browser/firefox.nix
     ./features/productivity
-    ./features/cli/nvim
+#    ./features/cli/nvim
     ./config/tmux
   ];
 
@@ -47,7 +47,7 @@
     firefox
     netcat
     wget
-#    neovim
+    neovim
     go
     docker
     docker-compose
@@ -60,11 +60,18 @@
     yq
     steam
     direnv
+    cmake # needed for telescope-fzf-native.nvim
+    gcc # for nvim parsers
   ];
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
   programs.git.enable = true;
+
+  home.file."./.config/nvim/" = {
+    source = ./nvim;
+    recursive = true;
+  };
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";

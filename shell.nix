@@ -1,12 +1,13 @@
-{ pkgs, ... }:
+{ pkgs ? import <nixpkgs> {}}:
+
 pkgs.mkShell {
-  shell = pkgs.fish;
   buildInputs = with pkgs; [
     rustc
     cargo
     rustfmt
     rust-analyzer
     clippy
+    postgresql
   ];
 
   RUST_BACKTRACE = 1;
