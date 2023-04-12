@@ -62,6 +62,7 @@
     direnv
     cmake # needed for telescope-fzf-native.nvim
     gcc # for nvim parsers
+    unzip # for nvim
   ];
 
   # Enable home-manager and git
