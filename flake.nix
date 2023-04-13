@@ -97,7 +97,11 @@
         desktop = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = [ ./hosts/desktop ];
-        }; 
+        };
+        workvm = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [ ./hosts/hyperv ];
+        };
       };
 
       homeConfigurations = {
