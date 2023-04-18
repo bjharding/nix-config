@@ -86,6 +86,10 @@
   hardware.opengl.enable = true;
   boot.kernelParams = [ "module_blacklist=i915" ];
 
+  sound.enable = true;
+  hardware.pulseaudio.enable = true;
+  services.pipewire.enable = false;
+
   environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw 
 
   services.xserver = {
