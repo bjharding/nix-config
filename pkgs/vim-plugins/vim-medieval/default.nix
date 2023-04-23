@@ -1,8 +1,6 @@
 { vimUtils, fetchFromGitHub }:
-let
-  pname = "vim-medieval";
-in
-vimUtils.buildVimPlugin {
+let pname = "vim-medieval";
+in vimUtils.buildVimPlugin {
   inherit pname;
   version = "2022-02-07";
   dontBuild = true;

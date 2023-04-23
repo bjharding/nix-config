@@ -3,22 +3,24 @@
   # 'inputs.${flake}.packages.${pkgs.system}' or
   # 'inputs.${flake}.legacyPackages.${pkgs.system}' or
   flake-inputs = final: _: {
-    inputs = builtins.mapAttrs
-      (_: flake: (flake.packages or flake.legacyPackages or { }).${final.system} or { })
+    inputs = builtins.mapAttrs (_: flake:
+      (flake.packages or flake.legacyPackages or { }).${final.system} or { })
       inputs;
   };
 
   # Adds my custom packages
-  additions = final: prev: import ../pkgs { pkgs = final; } // {
-    formats = prev.formats // import ../pkgs/formats { pkgs = final; };
-    vimPlugins = prev.vimPlugins // final.callPackage ../pkgs/vim-plugins { };
-  };
+  additions = final: prev:
+    import ../pkgs { pkgs = final; } // {
+      formats = prev.formats // import ../pkgs/formats { pkgs = final; };
+      vimPlugins = prev.vimPlugins // final.callPackage ../pkgs/vim-plugins { };
+    };
 
   # Modifies existing packages
   modifications = final: prev: {
     vimPlugins = prev.vimPlugins // {
       vim-numbertoggle = prev.vimPlugins.vim-numbertoggle.overrideAttrs (oa: {
-        patches = (oa.patches or [ ]) ++ [ ./vim-numbertoggle-command-mode.patch ];
+        patches = (oa.patches or [ ])
+          ++ [ ./vim-numbertoggle-command-mode.patch ];
       });
     };
 
@@ -77,9 +79,7 @@
       ];
     });
     todoman = prev.todoman.overrideAttrs (oa: {
-      disabledTests = oa.disabledTests ++ [
-        "test_datetime_serialization"
-      ];
+      disabledTests = oa.disabledTests ++ [ "test_datetime_serialization" ];
     });
   };
 }

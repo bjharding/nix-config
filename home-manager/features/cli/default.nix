@@ -1,11 +1,5 @@
 { pkgs, ... }: {
-  imports = [
-    ./alacritty.nix
-    ./bat.nix
-    ./fish
-    ./git.nix
-    ./starship.nix
-  ];
+  imports = [ ./alacritty.nix ./bat.nix ./fish ./git.nix ./starship.nix ];
   home.packages = with pkgs; [
     bc # calulator
     bottom # system viewer

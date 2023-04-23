@@ -1,8 +1,5 @@
 { pkgs, ... }: {
-  imports = [
-  ];
-  home.packages = with pkgs; [
-    obsidian
-  ];
+  imports = [ ];
+  home.packages = with pkgs; [ obsidian ];
 
 }

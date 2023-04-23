@@ -1,8 +1,6 @@
 { vimUtils, fetchFromGitea }:
-let
-  pname = "gemini-vim-syntax";
-in
-vimUtils.buildVimPlugin {
+let pname = "gemini-vim-syntax";
+in vimUtils.buildVimPlugin {
   inherit pname;
   version = "2021-11-15";
   dontBuild = true;

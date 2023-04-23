@@ -1,9 +1,9 @@
 { config, pkgs, ... }:
 
 let
-  lspServers = pkgs.writeText "lsp_servers.json" (builtins.toJSON (import ./lsp_servers.nix { inherit pkgs; }));
-in
-{
+  lspServers = pkgs.writeText "lsp_servers.json"
+    (builtins.toJSON (import ./lsp_servers.nix { inherit pkgs; }));
+in {
   home.sessionVariables = {
     EDITOR = "${config.home.profileDirectory}/bin/nvim";
   };
@@ -25,7 +25,8 @@ in
     '';
     plugins = with pkgs.nvimPlugins; [
       {
-        plugin = pkgs.unstable.vimPlugins.nvim-treesitter.withPlugins (ps: with ps; [ nix python ]);
+        plugin = pkgs.unstable.vimPlugins.nvim-treesitter.withPlugins
+          (ps: with ps; [ nix python ]);
         type = "lua";
         config = ''
           require("config.treesitter")
@@ -184,14 +185,15 @@ in
       nodePackages.neovim
 
       # Python
-      (python3.withPackages (ps: with ps; [
-        setuptools # Required by pylama for some reason
-        pylama
-        black
-        isort
-        yamllint
-        debugpy
-      ]))
+      (python3.withPackages (ps:
+        with ps; [
+          setuptools # Required by pylama for some reason
+          pylama
+          black
+          isort
+          yamllint
+          debugpy
+        ]))
       nodePackages.pyright
 
       # Lua
@@ -240,7 +242,6 @@ in
       fd
     ];
   };
-
 
   home.file = {
     ".config/nvim" = {

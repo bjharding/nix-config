@@ -1,9 +1,7 @@
 { pkgs, specialArgs, ... }:
 
-let
-  fontSize = 8;
-in
-{
+let fontSize = 8;
+in {
   programs.alacritty = {
     enable = true;
     settings = {
@@ -25,17 +23,19 @@ in
         };
         size = fontSize;
       };
-      key_bindings = [
-        { key = 53; mods = "Shift"; mode = "Vi"; action = "SearchBackward"; }
-      ];
-      hints.enabled = [
-        {
-          regex = ''(mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)[^\u0000-\u001F\u007F-\u009F<>"\\s{-}\\^⟨⟩`]+'';
-          command = "${pkgs.mimeo}/bin/mimeo";
-          post_processing = true;
-          mouse.enabled = true;
-        }
-      ];
+      key_bindings = [{
+        key = 53;
+        mods = "Shift";
+        mode = "Vi";
+        action = "SearchBackward";
+      }];
+      hints.enabled = [{
+        regex = ''
+          (mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)[^\u0000-\u001F\u007F-\u009F<>"\\s{-}\\^⟨⟩`]+'';
+        command = "${pkgs.mimeo}/bin/mimeo";
+        post_processing = true;
+        mouse.enabled = true;
+      }];
       selection.save_to_clipboard = true;
       shell.program = "${pkgs.fish}/bin/fish";
       window = {

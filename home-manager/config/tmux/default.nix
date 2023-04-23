@@ -1,4 +1,3 @@
-
 { pkgs, ... }:
 
 {
@@ -50,15 +49,11 @@
   };
 
   home.file = {
-      ".local/scripts" = {
-          recursive = true;
-          source = ./scripts;
-        };
+    ".local/scripts" = {
+      recursive = true;
+      source = ./scripts;
     };
+  };
 
-  home.file = {
-      ".cht-config" = {
-          source = ./cht-config;
-        };
-    };
+  home.file = { ".cht-config" = { source = ./cht-config; }; };
 }

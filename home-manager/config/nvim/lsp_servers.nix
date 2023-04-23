@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   clangd = { };
   nil_ls = { };
   pyright = { };

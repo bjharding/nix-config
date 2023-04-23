@@ -1,5 +1,4 @@
-{ pkgs, ...}:
-{
+{ pkgs, ... }: {
   programs.git = {
     enable = true;
     userName = "Benjamin Harding";
@@ -10,16 +9,20 @@
       chunkyadd = "add --patch"; # stage commits chunk by chunk
 
       # via http://blog.apiaxle.com/post/handy-git-tips-to-stop-you-getting-fired/
-      snapshot = "!git stash save \"snapshot: $(date)\" && git stash apply \"stash@{0}\"";
+      snapshot =
+        ''!git stash save "snapshot: $(date)" && git stash apply "stash@{0}"'';
       snapshots = "!git stash list --grep snapshot";
 
       #via http://stackoverflow.com/questions/5188320/how-can-i-get-a-list-of-git-branches-ordered-by-most-recent-commit
-      recent-branches = "!git for-each-ref --count=5 --sort=-committerdate refs/heads/ --format='%(refname:short)'";
+      recent-branches =
+        "!git for-each-ref --count=5 --sort=-committerdate refs/heads/ --format='%(refname:short)'";
 
       # branch
       b = "branch -v"; # branch (verbose)
-      create-branch = "!sh -c 'git push origin HEAD:refs/heads/$1 && git fetch origin && git branch --track $1 origin/$1 && cd . && git checkout $1' -";
-      delete-branch = "!sh -c 'git push origin :refs/heads/$1 && git remote prune origin && git branch -D $1' -";
+      create-branch =
+        "!sh -c 'git push origin HEAD:refs/heads/$1 && git fetch origin && git branch --track $1 origin/$1 && cd . && git checkout $1' -";
+      delete-branch =
+        "!sh -c 'git push origin :refs/heads/$1 && git remote prune origin && git branch -D $1' -";
 
       # commit
       c = "commit -m"; # commit with message
@@ -30,7 +33,8 @@
 
       # checkout
       co = "checkout"; # checkout
-      nb = "checkout -b"; # create and switch to a new branch (mnemonic: "git new branch branchname...")
+      nb =
+        "checkout -b"; # create and switch to a new branch (mnemonic: "git new branch branchname...")
 
       # cherry-pick
       cp = "cherry-pick -x"; # grab a change from a branch
@@ -42,16 +46,19 @@
       diffstat = "diff --stat -r";
 
       # graphviz
-      graphviz = "!f() { echo 'digraph git {' ; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g' ; echo '}'; }; f";
+      graphviz = ''
+        !f() { echo 'digraph git {' ; git log --pretty='format:  %h -> { %p }' "$@" | sed 's/[0-9a-f][0-9a-f]*/"&"/g' ; echo '}'; }; f'';
 
       # log
       l = "log --graph --date=short";
       llog = "log --date=local";
-      lg = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %Cgreen(%cr) %C(bold blue)<%an>%Creset %s' --abbrev-commit --date=relative";
-      changes = "log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status";
-      short = "log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\"";
-      changelog = "log --pretty=format:\" * %s\"";
-      shortnocolor = "log --pretty=format:\"%h %cr %cn %s\"";
+      lg =
+        "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %Cgreen(%cr) %C(bold blue)<%an>%Creset %s' --abbrev-commit --date=relative";
+      changes =
+        ''log --pretty=format:"%h %cr %cn %Cgreen%s%Creset" --name-status'';
+      short = ''log --pretty=format:"%h %cr %cn %Cgreen%s%Creset"'';
+      changelog = ''log --pretty=format:" * %s"'';
+      shortnocolor = ''log --pretty=format:"%h %cr %cn %s"'';
 
       # new
       new = "!sh -c 'git log $1@{1}..$1@{0} \"$@\"'";
@@ -74,12 +81,14 @@
 
       # reset
       unstage = "reset HEAD"; # remove files from index (tracking)
-      uncommit = "reset --soft HEAD^"; # go back before last commit, with files in uncommitted state
+      uncommit =
+        "reset --soft HEAD^"; # go back before last commit, with files in uncommitted state
       filelog = "log -u"; # show changes to a file
       mt = "mergetool"; # fire up the merge tool
 
       # serve the repo
-      serve = "!git daemon --reuseaddr --verbose --base-path=. --export-all --informative-errors";
+      serve =
+        "!git daemon --reuseaddr --verbose --base-path=. --export-all --informative-errors";
 
       # stash
       ss = "stash"; # stash changes
@@ -101,29 +110,27 @@
       svnl = "svn log --oneline --show-commit";
 
       # unmerged
-      edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; vim `f`";
-      add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`";
+      edit-unmerged =
+        "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; vim `f`";
+      add-unmerged =
+        "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`";
 
       # what
       whatis = "show -s --pretty='tformat:%h (%s, %ad)' --date=short";
 
       # who
       who = "shortlog -s --";
-      whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -";
+      whois = ''
+        !sh -c 'git log -i -1 --pretty="format:%an <%ae>
+        " --author="$1"' -'';
     };
 
     extraConfig = {
-      advice = {
-        statusHints = true;
-      };
+      advice = { statusHints = true; };
 
-      apply = {
-        whitespace = "nowarn";
-      };
+      apply = { whitespace = "nowarn"; };
 
-      branch = {
-        autosetupmerge = true;
-      };
+      branch = { autosetupmerge = true; };
 
       color = {
         ui = true;
@@ -155,7 +162,8 @@
       };
 
       format = {
-        pretty = "format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset";
+        pretty =
+          "format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset";
       };
 
       merge = {
@@ -164,21 +172,13 @@
         verbosity = 1;
       };
 
-      mergetool = {
-        prompt = false;
-      };
+      mergetool = { prompt = false; };
 
-      pull = {
-        ff = "only";
-      };
+      pull = { ff = "only"; };
 
-      push = {
-        default = "tracking";
-      };
+      push = { default = "tracking"; };
 
-      rerere = {
-        enabled = true;
-      };
+      rerere = { enabled = true; };
     };
 
     delta = {
@@ -188,21 +188,21 @@
         dark = true;
         file-decoration-style = "none";
         file-style = "omit";
-        hunk-header-decoration-style = "\"#88C0D0\" box ul";
+        hunk-header-decoration-style = ''"#88C0D0" box ul'';
         hunk-header-file-style = "white";
-        hunk-header-line-number-style = "bold \"#5E81AC\"";
+        hunk-header-line-number-style = ''bold "#5E81AC"'';
         hunk-header-style = "file line-number syntax";
         line-numbers = true;
-        line-numbers-left-style = "\"#88C0D0\"";
-        line-numbers-minus-style = "\"#BF616A\"";
-        line-numbers-plus-style = "\"#A3BE8C\"";
-        line-numbers-right-style = "\"#88C0D0\"";
+        line-numbers-left-style = ''"#88C0D0"'';
+        line-numbers-minus-style = ''"#BF616A"'';
+        line-numbers-plus-style = ''"#A3BE8C"'';
+        line-numbers-right-style = ''"#88C0D0"'';
         line-numbers-zero-style = "white";
-        minus-emph-style = "syntax bold \"#780000\"";
-        minus-style = "syntax \"#400000\"";
-        plus-emph-style = "syntax bold \"#007800\"";
-        plus-style = "syntax \"#004000\"";
-        whitespace-error-style = "\"#280050\" reverse";
+        minus-emph-style = ''syntax bold "#780000"'';
+        minus-style = ''syntax "#400000"'';
+        plus-emph-style = ''syntax bold "#007800"'';
+        plus-style = ''syntax "#004000"'';
+        whitespace-error-style = ''"#280050" reverse'';
         zero-style = "syntax";
         syntax-theme = "Nord";
       };

@@ -1,5 +1,4 @@
-{ inputs, outputs, lib, config, pkgs, ... }:
-{
+{ inputs, outputs, lib, config, pkgs, ... }: {
   # You can import other NixOS modules here
   imports = [
     # If you want to use modules your own flake exports (from modules/nixos):
@@ -20,9 +19,9 @@
     # You can add overlays here
     overlays = [
       # Add overlays your own flake exports (from overlays and pkgs dir):
-#      outputs.overlays.additions
-#      outputs.overlays.modifications
-#      outputs.overlays.unstable-packages
+      #      outputs.overlays.additions
+      #      outputs.overlays.modifications
+      #      outputs.overlays.unstable-packages
 
       # You can also add overlays exported from other flakes:
       # neovim-nightly-overlay.overlays.default
@@ -48,7 +47,8 @@
 
     # This will additionally add your inputs to the system's legacy channels
     # Making legacy nix commands consistent as well, awesome!
-    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
+    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}")
+      config.nix.registry;
 
     settings = {
       # Enable flakes and new 'nix' command
@@ -84,39 +84,39 @@
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
   hardware.opengl.enable = true;
-#  boot.kernelParams = [ "module_blacklist=i915" ];
+  #  boot.kernelParams = [ "module_blacklist=i915" ];
 
-  environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw 
+  environment.pathsToLink =
+    [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
 
   services.xserver = {
     enable = true;
-    
-#    videoDrivers = [ "nvidia" ];
 
-    desktopManager = {
-      xterm.enable = false;
-    };
-   
-    displayManager = {
-        defaultSession = "none+i3";
-    };
+    #    videoDrivers = [ "nvidia" ];
+
+    desktopManager = { xterm.enable = false; };
+
+    displayManager = { defaultSession = "none+i3"; };
 
     windowManager.i3 = {
       enable = true;
       extraPackages = with pkgs; [
-        dmenu #application launcher most people use
+        dmenu # application launcher most people use
         i3status # gives you the default i3 status bar
-        i3lock #default i3 screen locker
-        i3blocks #if you are planning on using i3blocks over i3status
+        i3lock # default i3 screen locker
+        i3blocks # if you are planning on using i3blocks over i3status
       ];
       configFile = "/etc/i3.conf";
     };
   };
-  environment.etc."i3.conf".text = pkgs.callPackage ./i3-config.nix {};
+  environment.etc."i3.conf".text = pkgs.callPackage ./i3-config.nix { };
 
-  fonts.fonts = with pkgs; [
-    (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" "JetBrainsMono" ]; })
-  ];
+  fonts.fonts = with pkgs;
+    [
+      (nerdfonts.override {
+        fonts = [ "FiraCode" "DroidSansMono" "JetBrainsMono" ];
+      })
+    ];
 
   users.users = {
     ben = {

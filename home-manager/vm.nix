@@ -9,7 +9,7 @@
     ./features/cli
     ./features/browser/firefox.nix
     ./features/productivity
-#    ./features/cli/nvim
+    #    ./features/cli/nvim
     ./config/tmux
   ];
 
