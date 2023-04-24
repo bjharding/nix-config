@@ -63,6 +63,7 @@
     cmake # needed for telescope-fzf-native.nvim
     gcc # for nvim parsers
     unzip # for nvim
+    lldb # for nvim (DAP)
   ];
 
   # Enable home-manager and git
