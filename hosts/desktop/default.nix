@@ -90,6 +90,8 @@
   hardware.pulseaudio.enable = true;
   services.pipewire.enable = false;
 
+  virtualisation.docker.enable = true;
+
   environment.pathsToLink =
     [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
 
@@ -133,7 +135,7 @@
         # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
       ];
       # TODO: Be sure to add any other groups you need (such as networkmanager, audio, docker, etc)
-      extraGroups = [ "networkmanager" "wheel" ];
+      extraGroups = [ "networkmanager" "wheel" "docker"];
       shell = pkgs.fish;
     };
   };

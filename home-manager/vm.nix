@@ -49,7 +49,6 @@
     wget
     neovim
     go
-    docker
     docker-compose
     nixfmt
     act
