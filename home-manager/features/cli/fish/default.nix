@@ -16,40 +16,56 @@ let
 
   custom = pkgs.callPackage ./plugins.nix { };
 
-  #  fenv = {
-  #    inherit (pkgs.fishPlugins.foreign-env) src;
-  #    name = "foreign-env";
-  #  };
-
   fishConfig = ''
     bind \t accept-autosuggestion
     set fish_greeting
   '' + fzfConfig + themeConfig;
 
-  #  dc = "${pkgs.docker-compose}/bin/docker-compose";
 in {
   programs.fish = {
     enable = true;
-    #    plugins = [ custom.theme fenv ];
-    #    plugins = [ custom.theme ];
     interactiveShellInit = ''
       eval (direnv hook fish)
       any-nix-shell fish --info-right | source
+
+      fish_vi_key_bindings
+      set fish_cursor_default block blink
+      set fish_cursor_insert line blink
+      set fish_cursor_replace_one underscore blink
+      set fish_cursor_visual block
     '';
+    shellAbbrs = {
+        ls = "exa";
+        ll = "exa -l";
+        n = "nix";
+        nd = "nix develop -c $SHELL";
+        ns = "nix shell";
+        nsn = "nix shell nixpkgs#";
+        nb = "nix build";
+        nbn = "nix build nixpkgs#";
+        nf = "nix flake";
+
+        nr = "nixos-rebuild --flake .";
+        nrs = "nixos-rebuild --flake . switch";
+        snr = "sudo nixos-rebuild --flake .";
+        snrs = "sudo nixos-rebuild --flake . switch";
+        hm = "home-manager --flake .";
+        hms = "home-manager --flake . switch";
+        v = "nvim";
+        vi = "nvim";
+        m = "neomutt";
+        
+      };
     shellAliases = {
       cat = "bat";
       du = "${pkgs.ncdu}/bin/ncdu --color dark -rr -x";
-      ls = "${pkgs.exa}/bin/exa";
-      ll = "${pkgs.exa}/bin/exa -l";
       ".." = "cd ..";
       ping = "${pkgs.prettyping}/bin/prettyping";
       tree = "${pkgs.exa}/bin/exa -T";
-     
-
+      getip = "http ifconfig.me";
+      kssh = "kitt +kitten ssh";
+      
     };
     shellInit = fishConfig;
   };
-
-  #  xdg.configFile."fish/completions/keytool.fish".text = custom.completions.keytool;
-  #  xdg.configFile."fish/functions/fish_prompt.fish".text = custom.prompt;
 }
