@@ -37,18 +37,15 @@ in {
       any-nix-shell fish --info-right | source
     '';
     shellAliases = {
-      #      inherit dc;
       cat = "bat";
-      #      dps = "${dc} ps";
-      #      dcd = "${dc} down --remove-orphans";
-      #      drm = "docker images -a -q | xargs docker rmi -f";
       du = "${pkgs.ncdu}/bin/ncdu --color dark -rr -x";
       ls = "${pkgs.exa}/bin/exa";
-      ll = "ls -a";
+      ll = "${pkgs.exa}/bin/exa -l";
       ".." = "cd ..";
       ping = "${pkgs.prettyping}/bin/prettyping";
       tree = "${pkgs.exa}/bin/exa -T";
-      #      xdg-open = "${pkgs.mimeo}/bin/mimeo";
+     
+
     };
     shellInit = fishConfig;
   };

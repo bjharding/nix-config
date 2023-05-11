@@ -90,6 +90,10 @@
   hardware.pulseaudio.enable = true;
   services.pipewire.enable = false;
 
+  hardware.keyboard.zsa.enable = true;
+
+  environment.systemPackages = with pkgs; [ wally-cli ];
+
   virtualisation.docker.enable = true;
 
   environment.pathsToLink =
@@ -123,6 +127,8 @@
         fonts = [ "FiraCode" "DroidSansMono" "JetBrainsMono" ];
       })
     ];
+
+  programs.steam.enable = true;
 
   users.users = {
     ben = {
