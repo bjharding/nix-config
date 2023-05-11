@@ -3,7 +3,7 @@
     ./features/cli
     ./features/browser/firefox.nix
     ./features/productivity
-    ./config/tmux
+    ./features/tmux
   ];
 
   nixpkgs = {
