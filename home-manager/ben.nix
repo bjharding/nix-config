@@ -47,7 +47,7 @@
   programs.git.enable = true;
 
   home.file."./.config/nvim/" = {
-    source = ./nvim;
+    source = ./features/nvim;
     recursive = true;
   };
 
