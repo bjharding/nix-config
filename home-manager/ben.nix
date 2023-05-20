@@ -41,6 +41,7 @@
     unzip # for nvim
     lldb # for nvim (DAP)
     kitty
+    rofi
   ];
 
   programs.home-manager.enable = true;
