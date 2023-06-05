@@ -132,6 +132,7 @@
 
   users.users = {
     ben = {
+      # Be sure to change it (using passwd) after rebooting!
       initialPassword = "correcthorsebatterystaple";
       isNormalUser = true;
       openssh.authorizedKeys.keys = [

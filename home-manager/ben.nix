@@ -42,6 +42,9 @@
     lldb # for nvim (DAP)
     kitty
     rofi
+    polybar
+    prusa-slicer
+    lutris # battle.net
   ];
 
   programs.home-manager.enable = true;

@@ -29,6 +29,14 @@ local plugins = {
       -- overrides.mason
       ensure_installed = {
         "rust-analyzer",
+        "gopls",
+        "gofumpt",
+        "goimports",
+        "golines",
+        "pyright",
+        "mypy",
+        "ruff",
+        "black",
       }
     }
   },

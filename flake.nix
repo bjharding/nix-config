@@ -21,10 +21,15 @@
     };
 
     firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, flake-utils, home-manager
-    , neovim-nightly-overlay, neovim-plugins, ... }@inputs:
+    , neovim-nightly-overlay, neovim-plugins, deploy-rs, ... }@inputs:
     let
       inherit (self) outputs;
       forEachSystem = nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-linux" ];
@@ -42,8 +47,8 @@
       ##        agenix = agenix.overlays.default;
       #      };
 
-      nixosModules = import ./modules/nixos;
-      homeManagerModules = import ./modules/home-manager;
+      #nixosModules = import ./modules/nixos;
+      #homeManagerModules = import ./modules/home-manager;
 
       devShells = forAllSystems (system: {
         default = nixpkgs.legacyPackages.${system}.callPackage ./shell.nix { };
@@ -60,22 +65,22 @@
 
       formatter = forEachPkgs (pkgs: pkgs.nixpkgs-fmt);
 
-      templates = import ./templates;
+     # templates = import ./templates;
 
-      packages = forEachPkgs (pkgs:
-        (import ./pkgs { inherit pkgs; }) // {
-          neovim = let
-            homeCfg = home-manager.lib.homeManagerConfiguration {
-              inherit pkgs;
-              extraSpecialArgs = { inherit inputs outputs; };
-              modules = [ ./home/misterio/generic.nix ];
-            };
-            pkg = homeCfg.config.programs.neovim.finalPackage;
-            init = homeCfg.config.xdg.configFile."nvim/init.lua".source;
-          in pkgs.writeShellScriptBin "nvim" ''
-            ${pkg}/bin/nvim -u ${init} "$@"
-          '';
-        });
+ #     packages = forEachPkgs (pkgs:
+ #       (import ./pkgs { inherit pkgs; }) // {
+ #         neovim = let
+ #           homeCfg = home-manager.lib.homeManagerConfiguration {
+ #             inherit pkgs;
+ #             extraSpecialArgs = { inherit inputs outputs; };
+ #             modules = [ ./home/misterio/generic.nix ];
+ #           };
+ #           pkg = homeCfg.config.programs.neovim.finalPackage;
+ #           init = homeCfg.config.xdg.configFile."nvim/init.lua".source;
+ #         in pkgs.writeShellScriptBin "nvim" ''
+ #           ${pkg}/bin/nvim -u ${init} "$@"
+ #         '';
+ #       });
 
       #      legacyPackages = forAllSystems (system:
       #        import inputs.nixpkgs {
@@ -94,6 +99,10 @@
           specialArgs = { inherit inputs outputs; };
           modules = [ ./hosts/hyperv ];
         };
+        kids2 = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [ ./hosts/kids2 ];
+        };
       };
 
       homeConfigurations = {
@@ -103,5 +112,21 @@
           modules = [ ./home-manager/ben.nix ];
         };
       };
+
+      deploy = {
+        sshUser = "ben";
+        user = "ben";
+        nodes = {
+          "kids2" = {
+            hostname = "10.21.1.90";
+            profiles.system = {
+              path = deploy-rs.lib.x86_64-linux.activate.nixos
+                self.nixosConfigurations."kids2";
+            };
+          };
+        };
+      };
+      checks = builtins.mapAttrs
+        (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
     };
 }
