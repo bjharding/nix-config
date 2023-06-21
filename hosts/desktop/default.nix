@@ -84,6 +84,8 @@
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
   hardware.opengl.enable = true;
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
+
   boot.kernelParams = [ "module_blacklist=i915" ];
 
   sound.enable = true;
@@ -129,7 +131,7 @@
     ];
 
   programs.steam.enable = true;
-
+  programs.fish.enable = true;
   users.users = {
     ben = {
       # Be sure to change it (using passwd) after rebooting!
