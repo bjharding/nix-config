@@ -10,6 +10,14 @@ in {
         id = 0;
         name = "ben";
         bookmarks = { };
+        extensions = with addons; [
+          bitwarden
+          darkreader
+          link-cleaner
+          privacy-badger
+          ublock-origin
+          vimium
+        ];
         settings = {
           "browser.disableResetPrompt" = true;
           "browser.download.panel.shown" = true;
@@ -27,13 +35,5 @@ in {
         };
       };
     };
-    extensions = with addons; [
-      bitwarden
-      darkreader
-      link-cleaner
-      privacy-badger
-      ublock-origin
-      vimium
-    ];
   };
 }
