@@ -45,6 +45,8 @@
     polybar
     prusa-slicer
     lutris # battle.net
+    path-of-building
+    discord
   ];
 
   programs.home-manager.enable = true;
