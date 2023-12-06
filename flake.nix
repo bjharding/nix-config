@@ -4,39 +4,56 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     home-manager.url = "github:nix-community/home-manager/release-23.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    hardware.url = "github:NixOS/nixos-hardware/master";
-    flake-utils.url = "github:numtide/flake-utils";
-
-    fish-bobthefish-theme = {
-      url = "github:gvolpe/theme-bobthefish";
-      flake = false;
-    };
-
     firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
-
-    deploy-rs = {
-      url = "github:serokell/deploy-rs";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    deploy-rs.url = "github:serokell/deploy-rs";
+    deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, flake-utils, home-manager
-    , neovim-nightly-overlay, neovim-plugins, deploy-rs, ... }@inputs:
+  outputs = 
+    { self
+    , nixpkgs
+    , nixpkgs-unstable
+    , nixos-hardware
+    , home-manager
+    , neovim-nightly-overlay
+    , deploy-rs
+    , neovim-plugins
+    , ...
+    }@inputs:
     let
       inherit (self) outputs;
-      forEachSystem = nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-linux" ];
-      forEachPkgs = f: forEachSystem (sys: f nixpkgs.legacyPackages.${sys});
-      forAllSystems = nixpkgs.lib.genAttrs flake-utils.lib.defaultSystems;
-    in {
-      overlays = import ./overlays { inherit inputs outputs; };
+      forAllSystems = nixpkgs.lib.genAttrs [ "aarch64-linux" "x86_64-linux" ];
+    in
+    rec {
+      overlays = {
+        default = import ./overlay/default.nix;
+        unstable = final: prev: {
+          unstable = nixpkgs-unstable.legacyPackages.${prev.system};
+        };
+      };
+
+      legacyPackages = forAllSystems (system:
+        import inputs.nixpkgs {
+          inherit system;
+          overlays = builtins.attrValues overlays;
+          config.allowUnfree = true;
+        }
+      );
 
       devShells = forAllSystems (system: {
         default = nixpkgs.legacyPackages.${system}.callPackage ./shell.nix { };
+        node = nixpkgs.legacyPackages.${system}.callPackage ./shells/node.nix { };
+        python = nixpkgs.legacyPackages.${system}.callPackage ./shells/python.nix { };
+        pythonVenv = nixpkgs.legacyPackages.${system}.callPackage ./shells/pythonVenv.nix { };
+        lint = nixpkgs.legacyPackages.${system}.callPackage ./shells/lint.nix { };
       });
 
-      formatter = forEachPkgs (pkgs: pkgs.nixpkgs-fmt);
+      formatter = forAllSystems (system: nixpkgs.legacyPackages."${system}".nixpkgs-fmt);
+
+      templates = import ./templates;
 
       nixosConfigurations = {
         desktop = nixpkgs.lib.nixosSystem {

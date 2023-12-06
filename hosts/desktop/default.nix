@@ -92,6 +92,8 @@
   hardware.pulseaudio.enable = true;
   services.pipewire.enable = false;
 
+  services.tailscale.enable = true;
+
   hardware.keyboard.zsa.enable = true;
 
   environment.systemPackages = with pkgs; [ wally-cli ];
