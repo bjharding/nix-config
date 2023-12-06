@@ -47,6 +47,7 @@
     lutris # battle.net
     path-of-building
     discord
+    vscode
   ];
 
   programs.home-manager.enable = true;
