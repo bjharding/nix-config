@@ -35,8 +35,8 @@ in {
       set fish_cursor_visual block
     '';
     shellAbbrs = {
-        ls = "eza";
-        ll = "eza -l";
+        ls = "exa";
+        ll = "exa -l";
         n = "nix";
         nd = "nix develop -c $SHELL";
         ns = "nix shell";
@@ -61,7 +61,7 @@ in {
       du = "${pkgs.ncdu}/bin/ncdu --color dark -rr -x";
       ".." = "cd ..";
       ping = "${pkgs.prettyping}/bin/prettyping";
-      tree = "${pkgs.eza}/bin/eza -T";
+      tree = "${pkgs.exa}/bin/exa -T";
       getip = "http ifconfig.me";
       kssh = "kitt +kitten ssh";
       

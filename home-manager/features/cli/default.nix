@@ -5,7 +5,7 @@
     bottom # system viewer
     cht-sh # cheat.sh
     direnv # ??
-    eza # better ls
+    exa # better ls
     htop # better top
     httpie # better curl
     fd # better find
