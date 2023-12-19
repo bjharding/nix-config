@@ -48,6 +48,7 @@
     path-of-building
     discord
     vscode
+    ollama
   ];
 
   programs.home-manager.enable = true;
