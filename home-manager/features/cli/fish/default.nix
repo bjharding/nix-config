@@ -35,8 +35,8 @@ in {
       set fish_cursor_visual block
     '';
     shellAbbrs = {
-        ls = "eza";
-        ll = "eza -l";
+        ls = "exa";
+        ll = "exa -l";
         n = "nix";
         nd = "nix develop -c $SHELL";
         ns = "nix shell";
