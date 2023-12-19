@@ -92,7 +92,7 @@
   hardware.pulseaudio.enable = true;
   services.pipewire.enable = false;
 
-  services.tailscale.enable = true;
+  # services.tailscale.enable = true;
 
   hardware.keyboard.zsa.enable = true;
 
