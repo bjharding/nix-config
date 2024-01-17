@@ -60,14 +60,6 @@
           specialArgs = { inherit inputs outputs; };
           modules = [ ./hosts/desktop ];
         };
-        workvm = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-          modules = [ ./hosts/hyperv ];
-        };
-        kids2 = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-          modules = [ ./hosts/kids2 ];
-        };
       };
 
       homeConfigurations = {
@@ -78,19 +70,6 @@
         };
       };
 
-      deploy = {
-        sshUser = "ben";
-        user = "ben";
-        nodes = {
-          "kids2" = {
-            hostname = "10.21.1.90";
-            profiles.system = {
-              path = deploy-rs.lib.x86_64-linux.activate.nixos
-                self.nixosConfigurations."kids2";
-            };
-          };
-        };
-      };
       checks = builtins.mapAttrs
         (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
     };
