@@ -22,43 +22,34 @@
   };
 
   home.packages = with pkgs; [
-    any-nix-shell
-    firefox
-    netcat
-    wget
-    neovim
-    go
-    docker-compose
-    nixfmt
     act
+    any-nix-shell        # fish support for nix shell
+    arandr               # simple GUI for xrandr
     colordiff
-    spotify-tui
-    openssh
-    yj
-    yq
     direnv
-    cmake # needed for telescope-fzf-native.nvim
-    gcc # for nvim parsers
-    unzip # for nvim
-    lldb # for nvim (DAP)
+    discord
+    docker-compose
+    firefox
+    go
     kitty
-    rofi
+    lutris              # battle.net
+    netcat
+    ollama
+    openssh
+    path-of-building
     polybar
     prusa-slicer
-    lutris # battle.net
-    path-of-building
-    discord
+    nixfmt
+    rofi
+    spotify-tui
     vscode
-    ollama
+    wget
+    yj
+    yq
   ];
 
   programs.home-manager.enable = true;
   programs.git.enable = true;
-
-  home.file."./.config/nvim/" = {
-    source = ./features/nvim;
-    recursive = true;
-  };
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
