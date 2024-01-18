@@ -92,8 +92,6 @@
   hardware.pulseaudio.enable = true;
   services.pipewire.enable = false;
 
-  # services.tailscale.enable = true;
-
   hardware.keyboard.zsa.enable = true;
 
   environment.systemPackages = with pkgs; [ wally-cli ];
@@ -103,27 +101,34 @@
   environment.pathsToLink =
     [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
 
-  services.xserver = {
-    enable = true;
-
-    videoDrivers = [ "nvidia" ];
-
-    desktopManager = { xterm.enable = false; };
-
-    displayManager = { defaultSession = "none+i3"; };
-
-    windowManager.i3 = {
+  services = {
+    xserver = {
       enable = true;
-      extraPackages = with pkgs; [
-        dmenu # application launcher most people use
-        i3status # gives you the default i3 status bar
-        i3lock # default i3 screen locker
-        i3blocks # if you are planning on using i3blocks over i3status
-      ];
-      configFile = "/etc/i3.conf";
+      displayManager = {
+        lightdm.enable = true;
+        autoLogin = {
+          enable = true;
+          user = "ben";
+        };
+        defaultSession = "hm-session";
+      };
+      desktopManager = {
+        runXdgAutostartIfNone = true;
+        session = [
+          {
+            name = "hm-session";
+            manage = "window";
+            start = ''
+              ${pkgs.runtimeShell} $HOME/.xsession &
+              waitPID=$!
+            '';
+          }
+        ];
+      };
+      xkb.layout = "us";
+      videoDrivers = [ "nvidia" ];
     };
   };
-  environment.etc."i3.conf".text = pkgs.callPackage ./i3-config.nix { };
 
   fonts.fonts = with pkgs;
     [

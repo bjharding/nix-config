@@ -4,23 +4,22 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     home-manager.url = "github:nix-community/home-manager/release-23.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
     deploy-rs.url = "github:serokell/deploy-rs";
     deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
+    polybar-themes = {
+      url = "github:adi1090x/polybar-themes";
+      flake = false;
+    };
   };
 
   outputs = 
     { self
     , nixpkgs
     , nixpkgs-unstable
-    , nixos-hardware
     , home-manager
-    , neovim-nightly-overlay
-    , deploy-rs
-    , neovim-plugins
     , ...
     }@inputs:
     let
@@ -69,8 +68,5 @@
           modules = [ ./home-manager/ben.nix ];
         };
       };
-
-      checks = builtins.mapAttrs
-        (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
     };
 }
