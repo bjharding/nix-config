@@ -61,7 +61,7 @@ bindsym $mod+Shift+0 move container to workspace number $ws0
 bindsym $mod+r mode "resize"
 
 # start a terminal
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec kitty
 
 # kill focused window
 bindsym $mod+q kill
@@ -187,7 +187,7 @@ exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id ~/.screenlayout/monitor.sh
 
 # set wallpaper
-#exec --no-startup-id sleep 1 && systemctl --user restart wallpaper.service
+exec --no-startup-id sleep 1 && systemctl --user restart wallpaper.service
 
 # Desktop notifications
 #exec --no-startup-id /usr/bin/dunst --config ~/.config/dunst/dunstrc

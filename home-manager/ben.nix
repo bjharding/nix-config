@@ -5,6 +5,7 @@
     ./features/productivity
     ./features/tmux
     ./features/i3
+    ./features/desktop/wallpaper
   ];
 
   nixpkgs = {
@@ -79,6 +80,7 @@
     alsa-utils # provides amixer/alsamixer/...
     flameshot
     psmisc # killall/pstree/prtstat/fuser/...
+    nushell
   ];
 
   programs.home-manager.enable = true;

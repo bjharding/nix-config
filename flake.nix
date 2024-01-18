@@ -13,6 +13,10 @@
       url = "github:adi1090x/polybar-themes";
       flake = false;
     };
+    wallpapers = {
+      url = "github:bjharding/wallpapers";
+      flake = false;
+    };
   };
 
   outputs = 
