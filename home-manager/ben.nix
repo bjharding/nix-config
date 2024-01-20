@@ -41,6 +41,7 @@
     go
     kitty
     lutris              # battle.net
+    wine
     netcat
     ollama
     openssh
@@ -81,6 +82,8 @@
     flameshot
     psmisc # killall/pstree/prtstat/fuser/...
     nushell
+
+    todoist-electron
   ];
 
   programs.home-manager.enable = true;

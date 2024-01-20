@@ -146,7 +146,15 @@ set $ws0 "0"
 # where you have to replace VGA-0/HDMI-0 with the names for your displays
 # you can get from xrandr command
 workspace $ws1 output HDMI-1
+workspace $ws2 output HDMI-1
+workspace $ws3 output HDMI-1
+workspace $ws4 output HDMI-1
+workspace $ws5 output HDMI-1
 workspace $ws6 output HDMI-0
+workspace $ws7 output HDMI-0
+workspace $ws8 output HDMI-0
+workspace $ws9 output HDMI-0
+workspace $ws0 output HDMI-0
 
 # bind program to workspace and focus to them on startup:
 assign [class="kitty"] $ws1
@@ -201,7 +209,10 @@ exec --no-startup-id flameshot
 # https://github.com/nwg-piotr/autotiling
 #exec_always --no-startup-id autotiling
 
+exec --no-startup-id i3-msg "workspace $ws1; exec kitty"
 exec --no-startup-id i3-msg "workspace $ws2; exec firefox"
+exec --no-startup-id i3-msg "workspace $ws6; exec todoist-electron"
+exec --no-startup-id i3-msg "workspace $ws7; exec obsidian"
 
 ##################
 # floating rules #
@@ -215,7 +226,7 @@ exec --no-startup-id i3-msg "workspace $ws2; exec firefox"
 # for_window [class="Pavucontrol" instance="pavucontrol"] floating enable
 # for_window [class="qt5ct" instance="qt5ct"] floating enable
 # for_window [class="Bluetooth-sendto" instance="bluetooth-sendto"] floating enable
-# for_window [window_role="About"] floating enable
+for_window [window_role="About"] floating enable
 
 # set border of floating window
 for_window [class="urxvt"] border pixel 1
