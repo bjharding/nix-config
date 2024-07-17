@@ -13,7 +13,7 @@
     initrd.kernelModules = [ ];
     kernelModules = [ "kvm-intel" ];
     extraModulePackages = [ ];
-  }
+  };
 
 
   fileSystems = {
