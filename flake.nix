@@ -163,6 +163,14 @@
             ./home-manager/work.nix
           ];
         };
+
+        home-dev = home-manager.lib.homeManagerConfiguration {
+          pkgs = legacyPackages.x86_64-linux;
+          extraSpecialArgs = { inherit inputs outputs overlays; };
+          modules = (builtins.attrValues homeManagerModules) ++ [
+            ./home-manager/home-dev.nix
+          ];
+        };
       };
 
     #   deploy.nodes =

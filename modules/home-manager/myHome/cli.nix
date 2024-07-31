@@ -17,8 +17,8 @@ in
       };
       git = {
         enable = true;
-        # userName = lib.mkIf cfg.personalGitEnable "test";
-        # userEmail = lib.mkIf cfg.personalGitEnable "test";
+        userName = lib.mkIf cfg.personalGitEnable "bjharding";
+        userEmail = lib.mkIf cfg.personalGitEnable "benjamin.j.harding@gmail.com";
       };
     };
     home.packages = with pkgs; [
