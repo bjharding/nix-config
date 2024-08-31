@@ -108,6 +108,14 @@
               ./nixos/desktop
             ];
           };
+
+          work = nixpkgs.lib.nixosSystem {
+            inherit specialArgs;
+            modules = defaultModules ++ [
+              ./nixos/work
+            ];
+          };
+
         #   nasgul = nixpkgs.lib.nixosSystem {
         #     inherit specialArgs;
         #     modules = defaultModules ++ [

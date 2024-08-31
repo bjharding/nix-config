@@ -2,5 +2,5 @@
   mySystem = import ./mySystem;
 #   homelab = import ./homelab;
 
-  sunshine = import ./sunshine.nix;    
+  sunshine = import ./sunshine.nix;
 }
