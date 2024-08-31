@@ -7,7 +7,7 @@
     ./neovim
     ./non-nixos.nix
     ./productivity.nix
-    ./tmux.nix
+    ./tmux
     ./zsh
   ];
 }
