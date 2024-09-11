@@ -181,6 +181,12 @@
     package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
 
+  systemd.sleep.extraConfig = ''
+    AllowSuspend=no
+    AllowHibernation=no
+    AllowHybridSleep=no
+    AllowSuspendThenHibernate=no
+  '';
 
 #   age.secrets = {
 #     cache_priv_key.file = ../../secrets/mordor_cache_priv_key.pem.age;
