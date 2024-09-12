@@ -36,6 +36,9 @@ in
         bind - split-window -v -c "#{pane_current_path}"
         bind c new-window -c "#{pane_current_path}"
 
+        bind-key x kill-pane # skip "kill-pane 1? (y/n)" prompt
+        set -g detach-on-destroy off  # don't exit from tmux when closing a session"
+
         # Pane movement shortcuts (same as vim)
         bind h select-pane -L
         bind j select-pane -D
@@ -52,12 +55,6 @@ in
         # Custom
         bind-key -r C run-shell "tmux new-window 'bash -c \"~/.nix-profile/bin/tmux-cht\"'"
         bind-key -r f run-shell "tmux new-window 'bash -c \"~/.nix-profile/bin/tmux-sessionizer\"'"
-        bind-key -r N run-shell "tmux new-window 'bash -c \"~/.nix-profile/bin/tmux-sessionizer ~/src/personal/nix-config\"'"
-        bind-key -r H run-shell "tmux new-window 'bash -c \"~/.nix-profile/bin/tmux-sessionizer ~/src/personal/homelab\"'"
-        bind-key -r A run-shell "tmux new-window 'bash -c \"~/.nix-profile/bin/tmux-sessionizer ~/src/work/ATS\"'"
-        bind-key -r T run-shell "tmux new-window 'bash -c \"~/.nix-profile/bin/tmux-sessionizer ~/src/work/ats-config\"'"
-        bind-key -r M run-shell "tmux new-window 'bash -c \"~/.nix-profile/bin/tmux-sessionizer ~/src/work/manufacturing-portal\"'"
-        bind-key -r P run-shell "tmux new-window 'bash -c \"~/.nix-profile/bin/tmux-sessionizer ~/src/work/pac-monorepo\"'"
       '';
     };
     home.packages = with pkgs; [

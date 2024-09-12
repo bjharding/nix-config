@@ -3,7 +3,7 @@
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(find ~/src/personal ~/src/work ~/src/explore -mindepth 1 -maxdepth 1 -type d | ~/.nix-profile/bin/fzf)
+    selected=$(find ~/src -mindepth 2 -maxdepth 2 -type d | ~/.nix-profile/bin/fzf)
 fi
 
 if [[ -z $selected ]]; then
@@ -19,7 +19,8 @@ if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
 fi
 
 if ! tmux has-session -t="$selected_name" 2> /dev/null; then
-    tmux new-session -ds "$selected_name" -c "$selected"
+    echo "shell: $SHELL" >> /tmp/myshell
+    tmux new-session -ds "$selected_name" -c "$selected" "$HOME/.nix-profile/bin/nvim -c ':Telescope find_files'; zsh"
 fi
 
 tmux switch-client -t "$selected_name"

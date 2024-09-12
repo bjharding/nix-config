@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+echo '1' >> /tmp/hi
+
+echo `~/.nix-profile/bin/sesh list` >> /tmp/hi
+
+echo '2' >> /tmp/hi
+
+connect=$(~/.nix-profile/bin/sesh list | ~/.nix-profile/bin/fzf)
+
+echo "$connect" >> /tmp/hi
+
+~/.nix-profile/bin/sesh connect "$connect"
+
+echo '3' >> /tmp/hi
+

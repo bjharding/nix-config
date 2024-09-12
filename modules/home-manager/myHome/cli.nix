@@ -25,6 +25,7 @@ in
       bat
       colordiff
       curl
+      devenv
       unstable.eza
       fd
       file
@@ -44,6 +45,7 @@ in
       xh
       yj
       yq
+      zoxide
     ];
   };
 }
