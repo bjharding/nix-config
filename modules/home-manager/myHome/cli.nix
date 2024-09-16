@@ -31,6 +31,7 @@ in
       fzf
       htop
       jq
+      lazygit
       neofetch
       nix-tree
       openssh
