@@ -31,6 +31,10 @@ let
       '';
     }
     { plugin = pkgs.vimPlugins.vim-sleuth; }
+    {
+      plugin = pkgs.vimPlugins.lazygit-nvim;
+      configFile = ./lazygit.lua;
+    }
   ];
   lspPlugins = importPlugins [
     ./lspconfig.nix
