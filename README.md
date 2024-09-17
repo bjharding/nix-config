@@ -71,6 +71,16 @@ usermod -s ~/.nix-profile/bin/zsh $USER
 home-manager switch --flake .
 ```
 
+## Other Usage
+
+### Dev Shells
+
+Example:
+
+```bash
+nix develop .#lint
+```
+
 ## Resources
 
 - [LongerHV](https://github.com/LongerHV/nixos-configuration)
