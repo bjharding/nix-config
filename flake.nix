@@ -44,12 +44,12 @@
     , nixpkgs-unstable
     , nixos-hardware
     , home-manager
-    # , agenix
-    # , deploy-rs
+      # , agenix
+      # , deploy-rs
     , neovim-plugins
     , xenon
     , kubectl
-    # , nixgl
+      # , nixgl
     , ...
     }@inputs:
     let
@@ -116,51 +116,51 @@
             ];
           };
 
-        #   nasgul = nixpkgs.lib.nixosSystem {
-        #     inherit specialArgs;
-        #     modules = defaultModules ++ [
-        #       ./nixos/nasgul
-        #     ];
-        #   };
-        #   playground = nixpkgs.lib.nixosSystem {
-        #     inherit specialArgs;
-        #     modules = defaultModules ++ [
-        #       ./nixos/playground
-        #     ];
-        #   };
-        #   smaug = nixpkgs.lib.nixosSystem {
-        #     inherit specialArgs;
-        #     modules = defaultModules ++ [
-        #       ./nixos/smaug
-        #     ];
-        #   };
-        #   sd-image = nixpkgs.lib.nixosSystem {
-        #     inherit specialArgs;
-        #     modules = defaultModules ++ [
-        #       "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
-        #       ./nixos/sd-image
-        #     ];
-        #   };
-        #   isoimage = nixpkgs.lib.nixosSystem {
-        #     system = "x86_64-linux";
-        #     inherit specialArgs;
-        #     modules = defaultModules ++ [
-        #       "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-gnome.nix"
-        #       { isoImage.squashfsCompression = "gzip -Xcompression-level 1"; }
-        #       ./nixos/iso
-        #     ];
-        #   };
-        #   isoimage-server = nixpkgs.lib.nixosSystem {
-        #     system = "x86_64-linux";
-        #     inherit specialArgs;
-        #     modules = defaultModules ++ [
-        #       "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-        #       {
-        #         isoImage.squashfsCompression = "gzip -Xcompression-level 1";
-        #         mySystem.user = "nixos";
-        #       }
-        #     ];
-        #   };
+          #   nasgul = nixpkgs.lib.nixosSystem {
+          #     inherit specialArgs;
+          #     modules = defaultModules ++ [
+          #       ./nixos/nasgul
+          #     ];
+          #   };
+          #   playground = nixpkgs.lib.nixosSystem {
+          #     inherit specialArgs;
+          #     modules = defaultModules ++ [
+          #       ./nixos/playground
+          #     ];
+          #   };
+          #   smaug = nixpkgs.lib.nixosSystem {
+          #     inherit specialArgs;
+          #     modules = defaultModules ++ [
+          #       ./nixos/smaug
+          #     ];
+          #   };
+          #   sd-image = nixpkgs.lib.nixosSystem {
+          #     inherit specialArgs;
+          #     modules = defaultModules ++ [
+          #       "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
+          #       ./nixos/sd-image
+          #     ];
+          #   };
+          #   isoimage = nixpkgs.lib.nixosSystem {
+          #     system = "x86_64-linux";
+          #     inherit specialArgs;
+          #     modules = defaultModules ++ [
+          #       "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-gnome.nix"
+          #       { isoImage.squashfsCompression = "gzip -Xcompression-level 1"; }
+          #       ./nixos/iso
+          #     ];
+          #   };
+          #   isoimage-server = nixpkgs.lib.nixosSystem {
+          #     system = "x86_64-linux";
+          #     inherit specialArgs;
+          #     modules = defaultModules ++ [
+          #       "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+          #       {
+          #         isoImage.squashfsCompression = "gzip -Xcompression-level 1";
+          #         mySystem.user = "nixos";
+          #       }
+          #     ];
+          #   };
         };
 
       homeConfigurations = {
@@ -181,29 +181,29 @@
         };
       };
 
-    #   deploy.nodes =
-    #     let
-    #       mkDeployConfig = hostname: configuration: {
-    #         inherit hostname;
-    #         profiles.system =
-    #           let
-    #             inherit (configuration.config.nixpkgs.hostPlatform) system;
-    #           in
-    #           {
-    #             path = deploy-rs.lib."${system}".activate.nixos configuration;
-    #             sshUser = "longer";
-    #             user = "root";
-    #             sshOpts = [ "-t" ];
-    #             magicRollback = false; # Disable because it breaks remote sudo :<
-    #             interactiveSudo = true;
-    #           };
-    #       };
-    #     in
-    #     {
-    #       nasgul = mkDeployConfig "nasgul.lan" self.nixosConfigurations.nasgul;
-    #       smaug = mkDeployConfig "smaug.lan" self.nixosConfigurations.smaug;
-    #     };
+      #   deploy.nodes =
+      #     let
+      #       mkDeployConfig = hostname: configuration: {
+      #         inherit hostname;
+      #         profiles.system =
+      #           let
+      #             inherit (configuration.config.nixpkgs.hostPlatform) system;
+      #           in
+      #           {
+      #             path = deploy-rs.lib."${system}".activate.nixos configuration;
+      #             sshUser = "longer";
+      #             user = "root";
+      #             sshOpts = [ "-t" ];
+      #             magicRollback = false; # Disable because it breaks remote sudo :<
+      #             interactiveSudo = true;
+      #           };
+      #       };
+      #     in
+      #     {
+      #       nasgul = mkDeployConfig "nasgul.lan" self.nixosConfigurations.nasgul;
+      #       smaug = mkDeployConfig "smaug.lan" self.nixosConfigurations.smaug;
+      #     };
 
-    #   checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+      #   checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
     };
 }

@@ -3,7 +3,7 @@
 {
   imports = [
     inputs.nixos-hardware.nixosModules.common-cpu-intel
-#    inputs.nixos-hardware.nixosModules.common-gpu-nvidia-nonprime
+    #    inputs.nixos-hardware.nixosModules.common-gpu-nvidia-nonprime
     ./hardware-configuration.nix
     ./networking.nix
     ./vm-variant.nix
@@ -25,12 +25,12 @@
     loader = {
       efi.canTouchEfiVariables = true;
       systemd-boot.enable = true;
-    #   grub = {
-    #     enable = true;
-    #     device = "nodev";
-    #     efiSupport = true;
-    #     zfsSupport = true;
-    #   };
+      #   grub = {
+      #     enable = true;
+      #     device = "nodev";
+      #     efiSupport = true;
+      #     zfsSupport = true;
+      #   };
     };
     # kernelParams = [ "module_blacklist=i915" ];
     # supportedFilesystems = [ "zfs" ];
@@ -120,20 +120,20 @@
     # pcscd.enable = true;
 
   };
-#   hardware.bluetooth.enable = true;
+  #   hardware.bluetooth.enable = true;
 
-#   powerManagement = {
-#     cpuFreqGovernor = "ondemand";
-#     cpufreq.min = 800000;
-#     cpufreq.max = 4700000;
-#   };
+  #   powerManagement = {
+  #     cpuFreqGovernor = "ondemand";
+  #     cpufreq.min = 800000;
+  #     cpufreq.max = 4700000;
+  #   };
 
   networking = {
     hostName = "ben-desktop";
     # hostId = "0c55ff12";
   };
 
-#   virtualisation.docker.storageDriver = "zfs";
+  #   virtualisation.docker.storageDriver = "zfs";
   environment.systemPackages = with pkgs; [
     # deploy-rs
     # unstable.yubioath-flutter
@@ -141,13 +141,13 @@
   users.users.${config.mySystem.user}.extraGroups = [ "dialout" ];
   hardware.opengl = {
     enable = true;
-#    extraPackages = [
-#      pkgs.vaapiVdpau
-#      pkgs.libvdpau-va-gl
-#    ];
+    #    extraPackages = [
+    #      pkgs.vaapiVdpau
+    #      pkgs.libvdpau-va-gl
+    #    ];
   };
 
-#  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
+  #  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
 
   hardware.nvidia = {
 
@@ -174,7 +174,7 @@
     open = false;
 
     # Enable the Nvidia settings menu,
-	# accessible via `nvidia-settings`.
+    # accessible via `nvidia-settings`.
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
@@ -188,13 +188,13 @@
     AllowSuspendThenHibernate=no
   '';
 
-#   age.secrets = {
-#     cache_priv_key.file = ../../secrets/mordor_cache_priv_key.pem.age;
-#     extra_access_tokens = {
-#       file = ../../secrets/extra_access_tokens.age;
-#       mode = "0440";
-#       group = config.users.groups.keys.name;
-#     };
-#   };
+  #   age.secrets = {
+  #     cache_priv_key.file = ../../secrets/mordor_cache_priv_key.pem.age;
+  #     extra_access_tokens = {
+  #       file = ../../secrets/extra_access_tokens.age;
+  #       mode = "0440";
+  #       group = config.users.groups.keys.name;
+  #     };
+  #   };
   system.stateVersion = "24.05";
 }

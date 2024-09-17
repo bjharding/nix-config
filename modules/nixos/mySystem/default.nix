@@ -51,11 +51,11 @@ in
       extraOptions = ''
         experimental-features = nix-command flakes
       '';
-    #   extraOptions = ''
-    #     experimental-features = nix-command flakes
-    #   '' + lib.optionalString (config.age.secrets ? "extra_access_tokens") ''
-    #     !include ${config.age.secrets.extra_access_tokens.path}
-    #   '';
+      #   extraOptions = ''
+      #     experimental-features = nix-command flakes
+      #   '' + lib.optionalString (config.age.secrets ? "extra_access_tokens") ''
+      #     !include ${config.age.secrets.extra_access_tokens.path}
+      #   '';
       registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
       nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
       gc = {
@@ -83,7 +83,7 @@ in
         pciutils
       ];
       shells = [ pkgs.zsh ];
-    #   pathsToLink = [ "/share/zsh" ];
+      #   pathsToLink = [ "/share/zsh" ];
     };
   };
 }
