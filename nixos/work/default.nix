@@ -188,6 +188,9 @@
     AllowSuspendThenHibernate=no
   '';
 
+  # this is for vscode remote ssh
+  programs.nix-ld.enable = true;
+
   #   age.secrets = {
   #     cache_priv_key.file = ../../secrets/mordor_cache_priv_key.pem.age;
   #     extra_access_tokens = {
