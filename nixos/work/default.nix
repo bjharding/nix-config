@@ -139,7 +139,7 @@
     # unstable.yubioath-flutter
   ];
   users.users.${config.mySystem.user}.extraGroups = [ "dialout" ];
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
     #    extraPackages = [
     #      pkgs.vaapiVdpau
