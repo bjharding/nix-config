@@ -27,6 +27,7 @@ in
       openstackclient
       packer
       swiftclient
+      talosctl
       terraform
       tilt
       unstable.kubernetes-polaris
