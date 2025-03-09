@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   fontName = config.myHome.gnome.font.name;
@@ -40,6 +40,12 @@ in
           inherit (config.myHome.colors) primary cursor normal bright;
         };
       };
+      settings = {
+        terminal.shell = {
+        args = ["new-session"  "-A"  "-D" "-s" "main"];
+        program = "${pkgs.tmux}/bin/tmux";
+      };
+    };
     };
   };
 }
