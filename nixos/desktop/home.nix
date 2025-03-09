@@ -4,6 +4,7 @@
   home.stateVersion = "24.05";
 
   myHome = {
+    devops.enable = true;
     gnome.enable = true;
     tmux.enable = true;
     zsh.enable = true;
@@ -11,6 +12,7 @@
       enable = true;
       enableLSP = true;
     };
+    llm.enable = true;
     productivity.enable = true;
   };
 
