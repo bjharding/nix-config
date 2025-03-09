@@ -14,7 +14,7 @@ in
     systemd.user.services.ollama = {
       Unit = {
         Description = "Ollama AI service";
-        After = ["network.target"];
+        After = [ "network.target" ];
       };
 
       Service = {
@@ -29,7 +29,7 @@ in
       };
 
       Install = {
-        WantedBy = ["default.target"];
+        WantedBy = [ "default.target" ];
       };
     };
   };
