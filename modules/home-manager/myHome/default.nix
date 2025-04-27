@@ -1,5 +1,6 @@
 {
   imports = [
+    ./bat.nix
     ./cli.nix
     ./colors.nix
     ./devops.nix

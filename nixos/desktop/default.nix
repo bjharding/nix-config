@@ -11,6 +11,7 @@
 
   mySystem = {
     gnome.enable = true;
+    # i3.enable = true;
     gaming.enable = true;
     vmHost = true;
     dockerHost = true;
@@ -19,6 +20,7 @@
       home = ./home.nix;
     };
   };
+
 
   boot = {
     loader = {
@@ -40,6 +42,9 @@
   networking = {
     hostName = "ben-desktop";
     # hostId = "0c55ff12";
+    firewall = {
+      allowedTCPPorts = [ 11434 ]; # ollama
+    };
   };
 
   environment.systemPackages = with pkgs; [

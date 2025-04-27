@@ -18,6 +18,7 @@ in
     # ./android.nix
     ./gaming.nix
     ./gnome.nix
+    ./i3.nix
     ./user.nix
     ./virt.nix
   ];

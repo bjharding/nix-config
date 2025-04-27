@@ -9,6 +9,9 @@ in
     home.packages = with pkgs; [
       todoist-electron
       obsidian
+      libreoffice-qt
+      anki
+      nextcloud-client
     ];
   };
 }

@@ -17,6 +17,7 @@
         size = 10000;
       };
       shellAliases = {
+        cat = "bat";
         ll = "eza -l --icons=auto";
         la = "eza -la --icons=auto";
         ns = "sudo nixos-rebuild switch --flake .";
