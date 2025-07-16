@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-let
+{pkgs, ...}: let
   lsp_servers = {
     nil_ls = {
       settings.nil = {
@@ -8,21 +6,21 @@ let
           maxMemoryMB = 4096;
           flake.autoEvalInputs = true;
         };
-        formatting.command = [ "nixpkgs-fmt" ];
+        formatting.command = ["nixpkgs-fmt"];
       };
     };
-    pyright = { };
-    dockerls = { };
-    bashls = { };
-    terraformls = { };
-    tflint = { };
-    gopls = { };
-    templ = { };
-    marksman = { };
+    pyright = {};
+    dockerls = {};
+    bashls = {};
+    terraformls = {};
+    tflint = {};
+    gopls = {};
+    templ = {};
+    marksman = {};
     ts_ls = {
       init_options.tsserver.path = "${pkgs.nodePackages.typescript}/bin/tsserver";
     };
-    taplo = { };
+    taplo = {};
     tailwindcss = {
       init_options = {
         userLanguages = {
@@ -30,59 +28,59 @@ let
         };
       };
     };
-    cssls = { };
-    eslint = { settings.format = false; };
-    jsonls = { init_options.provideFormatter = false; };
-    yamlls = { };
-    html = { init_options.provideFormatter = false; };
+    cssls = {};
+    eslint = {settings.format = false;};
+    jsonls = {init_options.provideFormatter = false;};
+    yamlls = {};
+    html = {init_options.provideFormatter = false;};
     volar.init_options.typescript.tsdk = "${pkgs.nodePackages.typescript}/lib/node_modules/typescript/lib";
-    elixirls.cmd = [ "elixir-ls" ];
+    elixirls.cmd = ["elixir-ls"];
     lua_ls = {
       settings.Lua = {
         runtime.version = "LuaJIT";
-        diagnostics.globals = [ "vim" ];
+        diagnostics.globals = ["vim"];
         telemetry.enable = false;
       };
     };
-    efm =
-      let
-        prettier = {
-          formatCommand = "prettier --stdin-filepath \${INPUT}";
-          formatStdin = true;
-        };
-        languages = {
-          json = [ prettier ];
-          javascript = [ prettier ];
-          html = [ prettier ];
-          css = [ prettier ];
-          vue = [ prettier ];
-          markdown = [
-            {
-              lintCommand = "markdownlint --stdin";
-              lintStdin = true;
-              lintFormats = [ "%f:%l %m" "%f:%l:%c %m" "%f: %l: %m" ];
-            }
-            prettier
-          ];
-        };
-      in
-      {
-        init_options.documentFormatting = true;
-        settings = { inherit languages; };
-        filetypes = builtins.attrNames languages;
+    efm = let
+      prettier = {
+        formatCommand = "prettier --stdin-filepath \${INPUT}";
+        formatStdin = true;
       };
+      languages = {
+        json = [prettier];
+        javascript = [prettier];
+        html = [prettier];
+        css = [prettier];
+        vue = [prettier];
+        markdown = [
+          {
+            lintCommand = "markdownlint --stdin";
+            lintStdin = true;
+            lintFormats = ["%f:%l %m" "%f:%l:%c %m" "%f: %l: %m"];
+          }
+          prettier
+        ];
+      };
+    in {
+      init_options.documentFormatting = true;
+      settings = {inherit languages;};
+      filetypes = builtins.attrNames languages;
+    };
     efm_go = {
       settings = {
-        languages.go = [{
-          lintCommand = "golangci-lint run --fix=false --out-format=line-number --print-issued-lines=false 2> /dev/null";
-          lintStdin = false;
-          lintWorkspace = true;
-          lintIgnoreExitCode = true;
-          lintFormats = [ "%f:%l:%c: %m" "%f:%l: %m" ];
-        }];
+        languages.go = [
+          {
+            lintCommand = "golangci-lint run --fix=false --out-format=line-number --print-issued-lines=false 2> /dev/null";
+            lintStdin = false;
+            lintWorkspace = true;
+            lintIgnoreExitCode = true;
+            lintFormats = ["%f:%l:%c: %m" "%f:%l: %m"];
+          }
+        ];
       };
-      filetypes = [ "go" ];
-      root_dir = [ "go.mod" ".git" ];
+      filetypes = ["go"];
+      root_dir = ["go.mod" ".git"];
     };
     efm_python = {
       init_options.documentFormatting = true;
@@ -99,33 +97,37 @@ let
           {
             lintCommand = "pylama --from-stdin \${INPUT}";
             lintStdin = true;
-            lintFormats = [ "%f:%l:%c %m" ];
+            lintFormats = ["%f:%l:%c %m"];
             lintIgnoreExitCode = true;
           }
         ];
       };
-      filetypes = [ "python" ];
-      root_dir = [ "pyproject.toml" "setup.cfg" "seput.py" ".git" ];
+      filetypes = ["python"];
+      root_dir = ["pyproject.toml" "setup.cfg" "seput.py" ".git"];
     };
   };
-in
-{
+in {
   plugin = pkgs.nvimPlugins.nvim-lspconfig;
-  preConfig = /* lua */ ''
-    dofile("${./lspconfig.lua}").setup_servers(vim.fn.json_decode([[${builtins.toJSON lsp_servers}]]))
-  '';
+  preConfig =
+    /*
+    lua
+    */
+    ''
+      dofile("${./lspconfig.lua}").setup_servers(vim.fn.json_decode([[${builtins.toJSON lsp_servers}]]))
+    '';
   dependencies = [
     pkgs.nvimPlugins.schemastore
   ];
   extraPackages = with pkgs; [
-    (python3.withPackages (ps: with ps; [
-      setuptools # Required by pylama for some reason
-      pylama
-      black
-      isort
-      yamllint
-    ]))
-    (unstable.pyright.override { inherit (pkgs) buildNpmPackage; })
+    (python3.withPackages (ps:
+      with ps; [
+        setuptools # Required by pylama for some reason
+        pylama
+        black
+        isort
+        yamllint
+      ]))
+    (unstable.pyright.override {inherit (pkgs) buildNpmPackage;})
     unstable.efm-langserver
     unstable.elixir-ls
     unstable.gopls

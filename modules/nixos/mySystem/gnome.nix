@@ -1,9 +1,11 @@
-{ config, lib, pkgs, ... }:
-
-let
-  cfg = config.mySystem.gnome;
-in
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  cfg = config.mySystem.gnome;
+in {
   options.mySystem.gnome = {
     enable = lib.mkEnableOption "gnome";
   };
@@ -45,7 +47,7 @@ in
         };
         desktopManager.gnome.enable = true;
       };
-      udev.packages = [ pkgs.gnome-settings-daemon ];
+      udev.packages = [pkgs.gnome-settings-daemon];
       pipewire = {
         enable = true;
         alsa.enable = true;

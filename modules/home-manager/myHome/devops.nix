@@ -1,9 +1,11 @@
-{ pkgs, config, lib, ... }:
-
-let
-  cfg = config.myHome.devops;
-in
 {
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.myHome.devops;
+in {
   options.myHome.devops.enable = lib.mkEnableOption "devops";
   config = lib.mkIf cfg.enable {
     programs.zsh.shellAliases = {
@@ -18,26 +20,31 @@ in
       fluxcd
       kind
       kubectl
+      kubectl-neat
+      kubectl-tree
       kubelogin
       kubelogin-oidc
       kubernetes-helm
       kubeseal
       minio-client
       mysql-client
-      openstackclient
       packer
       swiftclient
-      talosctl
       terraform
       tilt
+      unstable.clusterctl
+      unstable.k3d
+      unstable.k9s
       unstable.kubernetes-polaris
       unstable.kubeshark
+      unstable.openstackclient
+      unstable.talosctl
       unstable.k3d
       unstable.k9s
       unstable.teleport.client
       (writeShellApplication {
         name = "kctx";
-        runtimeInputs = [ kubectl fzf ];
+        runtimeInputs = [kubectl fzf];
         text = ''
           kubectl config get-contexts -o name \
           | fzf --height=10 \
@@ -46,7 +53,7 @@ in
       })
       (writeShellApplication {
         name = "kctn";
-        runtimeInputs = [ kubectl fzf ];
+        runtimeInputs = [kubectl fzf];
         text = ''
           kubectl get namespaces -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}' \
             | fzf --height=10 \

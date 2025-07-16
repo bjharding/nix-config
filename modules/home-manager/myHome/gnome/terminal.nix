@@ -1,17 +1,22 @@
-{ config, lib, pkgs, ... }:
-
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   fontName = config.myHome.gnome.font.name;
   fontSize = config.myHome.gnome.font.size;
-in
-{
+in {
   config = lib.mkIf config.myHome.gnome.enable {
     programs.alacritty = {
       enable = true;
       settings = {
         env.TERM = "xterm-256color";
         window = {
-          padding = { x = 6; y = 6; };
+          padding = {
+            x = 6;
+            y = 6;
+          };
           opacity = 0.90;
         };
         cursor = {
@@ -42,7 +47,7 @@ in
       };
       settings = {
         terminal.shell = {
-          args = [ "new-session" "-A" "-D" "-s" "main" ];
+          args = ["new-session" "-A" "-D" "-s" "main"];
           program = "${pkgs.tmux}/bin/tmux";
         };
       };

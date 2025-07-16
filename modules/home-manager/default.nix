@@ -1,5 +1,9 @@
 {
-  default = { config, lib, ... }: {
+  default = {
+    config,
+    lib,
+    ...
+  }: {
     home = rec {
       username = lib.mkDefault "ben";
       homeDirectory = lib.mkDefault "/home/${username}";

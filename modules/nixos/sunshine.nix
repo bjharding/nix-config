@@ -1,16 +1,28 @@
-{ config, lib, pkgs, ... }:
-
-let
-  cfg = config.programs.sunshine;
-in
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  cfg = config.programs.sunshine;
+in {
   options.programs.sunshine = with lib; {
     enable = mkEnableOption "sunshine";
   };
 
   config = lib.mkIf cfg.enable {
-    networking.firewall.allowedTCPPortRanges = [{ from = 47984; to = 48010; }];
-    networking.firewall.allowedUDPPortRanges = [{ from = 47998; to = 48010; }];
+    networking.firewall.allowedTCPPortRanges = [
+      {
+        from = 47984;
+        to = 48010;
+      }
+    ];
+    networking.firewall.allowedUDPPortRanges = [
+      {
+        from = 47998;
+        to = 48010;
+      }
+    ];
     security.wrappers.sunshine = {
       owner = "root";
       group = "root";

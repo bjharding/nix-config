@@ -1,6 +1,4 @@
-{ lib, ... }:
-
-let
+{lib, ...}: let
   primary = {
     background = "#1B2B34";
     foreground = "#CDD3DE";
@@ -47,10 +45,9 @@ let
     bright.cyan
     bright.white
   ];
-in
-{
+in {
   options.myHome.colors = lib.mkOption {
-    default = { inherit primary cursor normal bright palette; };
+    default = {inherit primary cursor normal bright palette;};
     readOnly = true;
   };
 }

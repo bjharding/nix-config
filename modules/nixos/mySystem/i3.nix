@@ -1,9 +1,11 @@
-{ config, lib, pkgs, ... }:
-
-let
-  cfg = config.mySystem.i3;
-in
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  cfg = config.mySystem.i3;
+in {
   options.mySystem.i3 = {
     enable = lib.mkEnableOption "i3";
   };
@@ -92,8 +94,8 @@ in
     systemd.user.services = {
       nm-applet = {
         description = "Network Manager Applet";
-        wantedBy = [ "graphical-session.target" ];
-        partOf = [ "graphical-session.target" ];
+        wantedBy = ["graphical-session.target"];
+        partOf = ["graphical-session.target"];
         serviceConfig = {
           ExecStart = "${pkgs.networkmanagerapplet}/bin/nm-applet";
           RestartSec = 5;

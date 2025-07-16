@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   plugin = pkgs.nvimPlugins.nvim-cmp;
   configFile = ./cmp.lua;
   dependencies = with pkgs.nvimPlugins; [

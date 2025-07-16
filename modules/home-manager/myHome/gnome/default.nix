@@ -1,12 +1,14 @@
-{ config, lib, pkgs, ... }:
-
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   cfg = config.myHome.gnome;
   profileUUID = "9e6bced8-89d4-4c52-aead-bbd59cbaad09";
   inherit (config.myHome) colors;
-in
-{
-  imports = [ ./terminal.nix ];
+in {
+  imports = [./terminal.nix];
   options.myHome.gnome = with lib; {
     enable = mkEnableOption "gnome";
     wallpaper = mkOption {
@@ -31,7 +33,7 @@ in
 
   config = lib.mkIf cfg.enable {
     fonts.fontconfig.enable = true;
-    home.packages = [ cfg.font.package ];
+    home.packages = [cfg.font.package];
     dconf.settings = {
       "org/gnome/desktop/peripherals/trackball" = {
         scroll-wheel-emulation-button = 8;
@@ -54,7 +56,7 @@ in
       };
       "org/gnome/terminal/legacy/profiles:" = {
         default = profileUUID;
-        list = [ profileUUID ];
+        list = [profileUUID];
       };
       "org/gnome/terminal/legacy/profiles:/:${profileUUID}" = {
         visible-name = "Oceanic Next";

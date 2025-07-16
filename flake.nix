@@ -23,95 +23,102 @@
     };
   };
 
-  outputs =
-    { self
-    , nixpkgs
-    , nixpkgs-unstable
-    , nixos-hardware
-    , home-manager
-    , neovim-plugins
-    , xenon
-    , kubectl
-    , ...
-    }@inputs:
-    let
-      inherit (self) outputs;
-      forAllSystems = nixpkgs.lib.genAttrs [ "aarch64-linux" "x86_64-linux" ];
-      defaultOverlay = import ./overlay/default.nix;
-      overlays = [
-        neovim-plugins.overlays.default
-        kubectl.overlays.default
-        (final: prev: {
-          unstable = nixpkgs-unstable.legacyPackages.${prev.system};
-          inherit (nixpkgs-unstable.legacyPackages.${prev.system}) neovim-unwrapped;
-        })
-        defaultOverlay
-      ];
-      nixosModules = import ./modules/nixos;
-      homeManagerModules = (import ./modules/home-manager) // xenon.homeManagerModules;
-      legacyPackages = forAllSystems (system:
+  outputs = {
+    self,
+    nixpkgs,
+    nixpkgs-unstable,
+    nixos-hardware,
+    home-manager,
+    neovim-plugins,
+    xenon,
+    kubectl,
+    ...
+  } @ inputs: let
+    inherit (self) outputs;
+    forAllSystems = nixpkgs.lib.genAttrs ["aarch64-linux" "x86_64-linux"];
+    defaultOverlay = import ./overlay/default.nix;
+    overlays = [
+      neovim-plugins.overlays.default
+      kubectl.overlays.default
+      (final: prev: {
+        unstable = nixpkgs-unstable.legacyPackages.${prev.system};
+        inherit (nixpkgs-unstable.legacyPackages.${prev.system}) neovim-unwrapped;
+      })
+      defaultOverlay
+    ];
+    nixosModules = import ./modules/nixos;
+    homeManagerModules = (import ./modules/home-manager) // xenon.homeManagerModules;
+    legacyPackages = forAllSystems (
+      system:
         import inputs.nixpkgs {
           inherit system overlays;
           config.allowUnfree = true;
         }
-      );
-    in
-    {
-      inherit legacyPackages nixosModules homeManagerModules;
-      overlays.default = defaultOverlay;
+    );
+  in {
+    inherit legacyPackages nixosModules homeManagerModules;
+    overlays.default = defaultOverlay;
 
-      devShells = forAllSystems (system: {
-        default = nixpkgs.legacyPackages.${system}.callPackage ./shell.nix { };
-        node = nixpkgs.legacyPackages.${system}.callPackage ./shells/node.nix { };
-        go = nixpkgs.legacyPackages.${system}.callPackage ./shells/go.nix { };
-        python = nixpkgs.legacyPackages.${system}.callPackage ./shells/python.nix { };
-        pythonVenv = nixpkgs.legacyPackages.${system}.callPackage ./shells/pythonVenv.nix { };
-        lint = nixpkgs.legacyPackages.${system}.callPackage ./shells/lint.nix { };
-      });
+    devShells = forAllSystems (system: {
+      default = nixpkgs.legacyPackages.${system}.callPackage ./shell.nix {};
+      node = nixpkgs.legacyPackages.${system}.callPackage ./shells/node.nix {};
+      go = nixpkgs.legacyPackages.${system}.callPackage ./shells/go.nix {};
+      python = nixpkgs.legacyPackages.${system}.callPackage ./shells/python.nix {};
+      pythonVenv = nixpkgs.legacyPackages.${system}.callPackage ./shells/pythonVenv.nix {};
+      lint = nixpkgs.legacyPackages.${system}.callPackage ./shells/lint.nix {};
+    });
 
-      formatter = forAllSystems (system: nixpkgs.legacyPackages."${system}".nixpkgs-fmt);
+    formatter = forAllSystems (system: nixpkgs.legacyPackages."${system}".nixpkgs-fmt);
 
-      templates = import ./templates;
+    templates = import ./templates;
 
-      nixosConfigurations =
-        let
-          defaultModules = (builtins.attrValues nixosModules) ++ [
-            home-manager.nixosModules.default
+    nixosConfigurations = let
+      defaultModules =
+        (builtins.attrValues nixosModules)
+        ++ [
+          home-manager.nixosModules.default
+        ];
+      specialArgs = {inherit inputs outputs overlays;};
+    in {
+      desktop = nixpkgs.lib.nixosSystem {
+        inherit specialArgs;
+        modules =
+          defaultModules
+          ++ [
+            ./nixos/desktop
           ];
-          specialArgs = { inherit inputs outputs overlays; };
-        in
-        {
-          desktop = nixpkgs.lib.nixosSystem {
-            inherit specialArgs;
-            modules = defaultModules ++ [
-              ./nixos/desktop
-            ];
-          };
+      };
 
-          work = nixpkgs.lib.nixosSystem {
-            inherit specialArgs;
-            modules = defaultModules ++ [
-              ./nixos/work
-            ];
-          };
-        };
-
-      homeConfigurations = {
-        work = home-manager.lib.homeManagerConfiguration {
-          pkgs = legacyPackages.x86_64-linux;
-          extraSpecialArgs = { inherit inputs outputs overlays; };
-          modules = (builtins.attrValues homeManagerModules) ++ [
-            ./home-manager/work.nix
+      work = nixpkgs.lib.nixosSystem {
+        inherit specialArgs;
+        modules =
+          defaultModules
+          ++ [
+            ./nixos/work
           ];
-        };
-
-        home-dev = home-manager.lib.homeManagerConfiguration {
-          pkgs = legacyPackages.x86_64-linux;
-          extraSpecialArgs = { inherit inputs outputs overlays; };
-          modules = (builtins.attrValues homeManagerModules) ++ [
-            ./home-manager/home-dev.nix
-          ];
-        };
       };
     };
+
+    homeConfigurations = {
+      work = home-manager.lib.homeManagerConfiguration {
+        pkgs = legacyPackages.x86_64-linux;
+        extraSpecialArgs = {inherit inputs outputs overlays;};
+        modules =
+          (builtins.attrValues homeManagerModules)
+          ++ [
+            ./home-manager/work.nix
+          ];
+      };
+
+      home-dev = home-manager.lib.homeManagerConfiguration {
+        pkgs = legacyPackages.x86_64-linux;
+        extraSpecialArgs = {inherit inputs outputs overlays;};
+        modules =
+          (builtins.attrValues homeManagerModules)
+          ++ [
+            ./home-manager/home-dev.nix
+          ];
+      };
+    };
+  };
 }

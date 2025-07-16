@@ -1,9 +1,13 @@
-{ inputs, outputs, config, lib, pkgs, ... }:
-
-let
-  cfg = config.mySystem;
-in
 {
+  inputs,
+  outputs,
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  cfg = config.mySystem;
+in {
   options.mySystem = {
     user = lib.mkOption {
       default = "ben";
@@ -22,7 +26,7 @@ in
     home-manager = lib.mkIf cfg.home-manager.enable {
       useGlobalPkgs = lib.mkDefault true;
       useUserPackages = lib.mkDefault true;
-      extraSpecialArgs = { inherit inputs; };
+      extraSpecialArgs = {inherit inputs;};
       sharedModules = builtins.attrValues outputs.homeManagerModules;
       users."${cfg.user}" = import cfg.home-manager.home;
     };
@@ -30,7 +34,7 @@ in
       defaultUserShell = pkgs.zsh;
       users.${cfg.user} = {
         isNormalUser = true;
-        extraGroups = [ "wheel" "networkmanager" "keys" ];
+        extraGroups = ["wheel" "networkmanager" "keys"];
         openssh.authorizedKeys.keys = [
           # TODO: add
         ];

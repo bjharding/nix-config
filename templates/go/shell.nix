@@ -1,7 +1,6 @@
-{ pkgs, ... }:
-
+{pkgs, ...}:
 pkgs.mkShell {
-  packages = with pkgs;[
+  packages = with pkgs; [
     air
     go
     golangci-lint

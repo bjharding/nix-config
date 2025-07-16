@@ -1,6 +1,8 @@
-{ lib, pkgs, ... }:
-
 {
+  lib,
+  pkgs,
+  ...
+}: {
   options.myHome.zsh = with lib; {
     enable = mkEnableOption "zsh";
   };
@@ -24,32 +26,39 @@
         hs = "home-manager switch --impure --flake .";
       };
       initContent = lib.mkMerge [
-        (lib.mkOrder 550 /* bash */ ''
-          # Completion
-          zstyle ':completion:*' menu yes select
+        (lib.mkOrder 550
+          /*
+          bash
+          */
+          ''
+            # Completion
+            zstyle ':completion:*' menu yes select
 
-          # Prompt
-          source ${pkgs.spaceship-prompt}/lib/spaceship-prompt/spaceship.zsh
-          autoload -U promptinit; promptinit
-        '')
+            # Prompt
+            source ${pkgs.spaceship-prompt}/lib/spaceship-prompt/spaceship.zsh
+            autoload -U promptinit; promptinit
+          '')
         (
-          /* bash */ ''
-          source ${./kubectl.zsh}
-          source ${./git.zsh}
+          /*
+          bash
+          */
+          ''
+            source ${./kubectl.zsh}
+            source ${./git.zsh}
 
-          bindkey '^[[Z' reverse-menu-complete
+            bindkey '^[[Z' reverse-menu-complete
 
-          # Workaround for ZVM overwriting keybindings
-          zvm_after_init_commands+=("bindkey '^[[A' history-substring-search-up")
-          zvm_after_init_commands+=("bindkey '^[OA' history-substring-search-up")
-          zvm_after_init_commands+=("bindkey '^[[B' history-substring-search-down")
-          zvm_after_init_commands+=("bindkey '^[OB' history-substring-search-down")
-        ''
+            # Workaround for ZVM overwriting keybindings
+            zvm_after_init_commands+=("bindkey '^[[A' history-substring-search-up")
+            zvm_after_init_commands+=("bindkey '^[OA' history-substring-search-up")
+            zvm_after_init_commands+=("bindkey '^[[B' history-substring-search-down")
+            zvm_after_init_commands+=("bindkey '^[OB' history-substring-search-down")
+          ''
         )
       ];
       localVariables = {
         ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE = "fg=13,underline";
-        ZSH_AUTOSUGGEST_STRATEGY = [ "history" "completion" ];
+        ZSH_AUTOSUGGEST_STRATEGY = ["history" "completion"];
         KEYTIMEOUT = 1;
         ZSHZ_CASE = "smart";
         ZSHZ_ECHO = 1;
@@ -74,7 +83,7 @@
         }
         {
           name = "zsh-vi-mode";
-          src = "${pkgs.unstable.zsh-vi-mode}/share/zsh-vi-mode";
+          src = "${pkgs.zsh-vi-mode}/share/zsh-vi-mode";
         }
         {
           name = "zsh-z";

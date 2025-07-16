@@ -1,17 +1,22 @@
-{ inputs, overlays, config, lib, pkgs, ... }:
-
-let
-  cfg = config.myHome.nonNixos;
-in
 {
+  inputs,
+  overlays,
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  cfg = config.myHome.nonNixos;
+in {
   options.myHome.nonNixos = with lib; {
     enable = mkEnableOption "nonNixos";
   };
   config = lib.mkIf cfg.enable {
-    home.sessionPath = [ "$HOME/.local/bin" ];
+    home.sessionPath = ["$HOME/.local/bin"];
     home.packages = [
       pkgs.hostname
       config.nix.package # This must be here, enable option below does not ensure that nix is available in path
+      pkgs.nixgl.auto.nixGLDefault
     ];
 
     nixpkgs = {
@@ -25,7 +30,7 @@ in
         experimental-features = nix-command flakes
         !include ./extra.conf
       '';
-      registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
+      registry = lib.mapAttrs (_: value: {flake = value;}) inputs;
     };
     programs.home-manager.enable = true;
   };

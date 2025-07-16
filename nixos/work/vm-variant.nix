@@ -1,6 +1,8 @@
-{ config, lib, ... }:
-
 {
+  config,
+  lib,
+  ...
+}: {
   virtualisation.vmVariant = {
     virtualisation = {
       memorySize = 4096;

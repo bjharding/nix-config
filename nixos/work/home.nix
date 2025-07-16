@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   home.stateVersion = "24.05";
 
   myHome = {
@@ -59,7 +57,7 @@
       gtk-theme = "Adwaita-dark";
     };
     "org/gnome/settings-daemon/plugins/media-keys" = {
-      screensaver = [ "<Shift><Control><Super>l" ];
+      screensaver = ["<Shift><Control><Super>l"];
     };
   };
 }

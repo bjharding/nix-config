@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-
+{pkgs, ...}:
 pkgs.mkShell {
-  nativeBuildInputs = with pkgs; [ go golangci-lint gopls ];
+  nativeBuildInputs = with pkgs; [go golangci-lint gopls];
 }

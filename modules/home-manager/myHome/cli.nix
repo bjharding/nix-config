@@ -1,12 +1,14 @@
-{ config, lib, pkgs, ... }:
-
-let
-  cfg = config.myHome.cli;
-in
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  cfg = config.myHome.cli;
+in {
   options.myHome.cli = {
-    enable = (lib.mkEnableOption "cli") // { default = true; };
-    personalGitEnable = (lib.mkEnableOption "personalGitEnable") // { default = true; };
+    enable = (lib.mkEnableOption "cli") // {default = true;};
+    personalGitEnable = (lib.mkEnableOption "personalGitEnable") // {default = true;};
   };
 
   config = lib.mkIf cfg.enable {
@@ -19,12 +21,13 @@ in
         enable = true;
         userName = lib.mkIf cfg.personalGitEnable "bjharding";
         userEmail = lib.mkIf cfg.personalGitEnable "benjamin.j.harding@gmail.com";
+        extraConfig.checkout.defaultRemote = "origin";
       };
     };
     home.packages = with pkgs; [
       colordiff
       curl
-      unstable.eza
+      eza
       fd
       file
       fzf

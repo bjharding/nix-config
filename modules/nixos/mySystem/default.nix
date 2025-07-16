@@ -1,6 +1,11 @@
-{ inputs, overlays, config, lib, pkgs, ... }:
-
-let
+{
+  inputs,
+  overlays,
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   cfg = config.mySystem;
   substituters = {
     # nasgul = {
@@ -12,8 +17,7 @@ let
     #   key = "mordor.lan:fY4rXQ7QqtaxsokDAA57U0kuXvlo9pzn3XgLs79TZX4";
     # };
   };
-in
-{
+in {
   imports = [
     # ./android.nix
     ./gaming.nix
@@ -26,7 +30,7 @@ in
   options.mySystem = with lib; {
     nix.substituters = mkOption {
       type = types.listOf types.str;
-      default = [ ];
+      default = [];
     };
   };
 
@@ -57,7 +61,7 @@ in
       #   '' + lib.optionalString (config.age.secrets ? "extra_access_tokens") ''
       #     !include ${config.age.secrets.extra_access_tokens.path}
       #   '';
-      registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
+      registry = lib.mapAttrs (_: value: {flake = value;}) inputs;
       nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
       gc = {
         automatic = lib.mkDefault true;
@@ -73,7 +77,7 @@ in
 
     services.openssh = with lib; {
       settings.PasswordAuthentication = mkDefault false;
-      settings.PermitRootLogin = mkDefault "no";
+      settings.PermitRootLogin = mkForce "no";
     };
 
     environment = {
@@ -83,7 +87,7 @@ in
         dnsutils
         pciutils
       ];
-      shells = [ pkgs.zsh ];
+      shells = [pkgs.zsh];
       #   pathsToLink = [ "/share/zsh" ];
     };
   };

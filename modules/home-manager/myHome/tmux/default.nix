@@ -1,9 +1,11 @@
-{ config, lib, pkgs, ... }:
-
-let
-  cfg = config.myHome.tmux;
-in
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  cfg = config.myHome.tmux;
+in {
   options.myHome.tmux = with lib; {
     enable = mkEnableOption "tmux";
   };
@@ -52,8 +54,6 @@ in
         # Custom
         bind-key -r C run-shell "tmux new-window 'bash -c \"~/.nix-profile/bin/tmux-cht\"'"
         bind-key -r f run-shell "tmux new-window 'bash -c \"~/.nix-profile/bin/tmux-sessionizer\"'"
-        bind-key -r N run-shell "tmux new-window 'bash -c \"~/.nix-profile/bin/tmux-sessionizer ~/src/personal/nix-config\"'"
-        bind-key -r H run-shell "tmux new-window 'bash -c \"~/.nix-profile/bin/tmux-sessionizer ~/src/personal/homelab\"'"
       '';
     };
     home.packages = with pkgs; [
