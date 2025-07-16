@@ -32,6 +32,10 @@
   services = {
     xserver.videoDrivers = [ "nvidia" ];
 
+    # https://www.reddit.com/r/NixOS/comments/1bq2bx4/beginners_guide_to_sunshine_gamedesktop_streaming/
+    avahi.publish.enable = true;
+    avahi.publish.userServices = true;
+
     # Enable openssh only to provide key for agenix
     openssh = {
       enable = true;
@@ -41,7 +45,6 @@
 
   networking = {
     hostName = "ben-desktop";
-    # hostId = "0c55ff12";
     firewall = {
       allowedTCPPorts = [ 11434 ]; # ollama
     };

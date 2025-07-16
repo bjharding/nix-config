@@ -1,5 +1,12 @@
 { config, lib, pkgs, ... }:
 
+let
+  neovim-unwrapped = pkgs.unstable.neovim-unwrapped.overrideAttrs (old: {
+    meta = old.meta or { } // {
+      maintainers = [ ];
+    };
+  });
+in
 {
   imports = [ ./plugins ];
 
@@ -12,7 +19,7 @@
     home.sessionVariables.EDITOR = "nvim";
     programs.xenon = {
       enable = true;
-      package = pkgs.unstable.neovim-unwrapped;
+      package = neovim-unwrapped;
       aliases = [ "nvim" "vim" "vi" ];
       initFiles = [
         ./init.lua

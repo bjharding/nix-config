@@ -12,6 +12,7 @@ in
     environment = {
       systemPackages = with pkgs; [
         firefox
+        vivaldi
         wl-clipboard
         spotify
         gnomeExtensions.appindicator
@@ -62,7 +63,6 @@ in
       };
     };
 
-    hardware.pulseaudio.enable = false;
     security.rtkit.enable = true;
   };
 }

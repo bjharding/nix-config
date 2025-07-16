@@ -74,8 +74,6 @@ in
       # };
     };
 
-    # Disable pulseaudio in favor of pipewire
-    hardware.pulseaudio.enable = false;
     security.rtkit.enable = true;
 
     # i3-specific settings

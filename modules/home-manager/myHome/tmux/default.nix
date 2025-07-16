@@ -54,10 +54,6 @@ in
         bind-key -r f run-shell "tmux new-window 'bash -c \"~/.nix-profile/bin/tmux-sessionizer\"'"
         bind-key -r N run-shell "tmux new-window 'bash -c \"~/.nix-profile/bin/tmux-sessionizer ~/src/personal/nix-config\"'"
         bind-key -r H run-shell "tmux new-window 'bash -c \"~/.nix-profile/bin/tmux-sessionizer ~/src/personal/homelab\"'"
-        bind-key -r A run-shell "tmux new-window 'bash -c \"~/.nix-profile/bin/tmux-sessionizer ~/src/work/ATS\"'"
-        bind-key -r T run-shell "tmux new-window 'bash -c \"~/.nix-profile/bin/tmux-sessionizer ~/src/work/ats-config\"'"
-        bind-key -r M run-shell "tmux new-window 'bash -c \"~/.nix-profile/bin/tmux-sessionizer ~/src/work/manufacturing-portal\"'"
-        bind-key -r P run-shell "tmux new-window 'bash -c \"~/.nix-profile/bin/tmux-sessionizer ~/src/work/pac-monorepo\"'"
       '';
     };
     home.packages = with pkgs; [

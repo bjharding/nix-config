@@ -6,7 +6,7 @@
   };
 
   myHome = {
-    nonNixos.enable = true;
+    # nonNixos.enable = true;
     # gnome.enable = true;
     devops.enable = true;
     # cli.personalGitEnable = false;

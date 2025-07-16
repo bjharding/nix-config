@@ -22,6 +22,8 @@
     protonup
     # signal-desktop
     super-slicer-latest
+    bambu-studio
+    orca-slicer
 
     gnomeExtensions.tray-icons-reloaded
   ];
