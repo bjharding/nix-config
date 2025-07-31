@@ -4,6 +4,7 @@
     ./cli.nix
     ./colors.nix
     ./devops.nix
+    ./eza.nix
     ./gnome
     ./llm.nix
     ./neovim

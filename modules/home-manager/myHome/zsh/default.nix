@@ -20,10 +20,6 @@
       };
       shellAliases = {
         cat = "bat";
-        ll = "eza -l --icons=auto";
-        la = "eza -la --icons=auto";
-        ns = "sudo nixos-rebuild switch --flake .";
-        hs = "home-manager switch --impure --flake .";
       };
       initContent = lib.mkMerge [
         (lib.mkOrder 550

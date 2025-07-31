@@ -27,7 +27,6 @@ in {
     home.packages = with pkgs; [
       colordiff
       curl
-      eza
       fd
       file
       fzf
@@ -40,7 +39,6 @@ in {
       p7zip
       ranger
       ripgrep
-      tree
       unzip
       wget
       xh
