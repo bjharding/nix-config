@@ -10,6 +10,7 @@
     ./neovim
     ./non-nixos.nix
     ./productivity.nix
+    ./tealdeer.nix
     ./tmux
     ./zsh
   ];
