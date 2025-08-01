@@ -21,6 +21,10 @@
       url = "github:LongerHV/kubectl-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    stylix = {
+      url = "github:nix-community/stylix/release-25.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -32,11 +36,11 @@
     neovim-plugins,
     xenon,
     kubectl,
+    stylix,
     ...
   } @ inputs: let
     inherit (self) outputs;
     forAllSystems = nixpkgs.lib.genAttrs ["aarch64-linux" "x86_64-linux"];
-    defaultOverlay = import ./overlay/default.nix;
     overlays = [
       neovim-plugins.overlays.default
       kubectl.overlays.default
@@ -44,7 +48,6 @@
         unstable = nixpkgs-unstable.legacyPackages.${prev.system};
         inherit (nixpkgs-unstable.legacyPackages.${prev.system}) neovim-unwrapped;
       })
-      defaultOverlay
     ];
     nixosModules = import ./modules/nixos;
     homeManagerModules = (import ./modules/home-manager) // xenon.homeManagerModules;
@@ -57,7 +60,6 @@
     );
   in {
     inherit legacyPackages nixosModules homeManagerModules;
-    overlays.default = defaultOverlay;
 
     devShells = forAllSystems (system: {
       default = nixpkgs.legacyPackages.${system}.callPackage ./shell.nix {};
@@ -77,6 +79,7 @@
         (builtins.attrValues nixosModules)
         ++ [
           home-manager.nixosModules.default
+          stylix.nixosModules.stylix
         ];
       specialArgs = {inherit inputs outputs overlays;};
     in {

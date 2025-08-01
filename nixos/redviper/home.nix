@@ -51,9 +51,6 @@
         "trayIconsReloaded@selfmade.pl"
       ];
     };
-    "org/gnome/desktop/interface" = {
-      gtk-theme = "Adwaita-dark";
-    };
     "org/gnome/settings-daemon/plugins/media-keys" = {
       screensaver = ["<Shift><Control><Super>l"];
     };

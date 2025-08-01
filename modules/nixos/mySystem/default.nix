@@ -20,9 +20,11 @@
 in {
   imports = [
     # ./android.nix
+    ./fonts.nix
     ./gaming.nix
     ./gnome.nix
     ./i3.nix
+    ./stylix.nix
     ./user.nix
     ./virt.nix
   ];

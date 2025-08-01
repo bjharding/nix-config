@@ -4,24 +4,14 @@
   pkgs,
   ...
 }: let
-  fontName = config.myHome.gnome.font.name;
-  fontSize = config.myHome.gnome.font.size;
+  fontName = lib.mkForce "Maple Mono NF";
+  fontSize = 15;
 in {
   config = lib.mkIf config.myHome.gnome.enable {
     programs.alacritty = {
       enable = true;
       settings = {
         env.TERM = "xterm-256color";
-        window = {
-          padding = {
-            x = 6;
-            y = 6;
-          };
-          opacity = 0.90;
-        };
-        cursor = {
-          thickness = 0.1;
-        };
         font = {
           normal = {
             family = fontName;
@@ -40,9 +30,6 @@ in {
             style = "Bold Italic";
           };
           size = fontSize;
-        };
-        colors = {
-          inherit (config.myHome.colors) primary cursor normal bright;
         };
       };
       settings = {
