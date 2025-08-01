@@ -22,7 +22,6 @@ in {
       sunshine.enable = true;
       corectrl = {
         enable = true;
-        gpuOverclock.enable = true;
       };
     };
   };
