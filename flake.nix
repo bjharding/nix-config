@@ -80,12 +80,12 @@
         ];
       specialArgs = {inherit inputs outputs overlays;};
     in {
-      desktop = nixpkgs.lib.nixosSystem {
+      redviper = nixpkgs.lib.nixosSystem {
         inherit specialArgs;
         modules =
           defaultModules
           ++ [
-            ./nixos/desktop
+            ./nixos/redviper
           ];
       };
 

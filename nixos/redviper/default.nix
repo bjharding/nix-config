@@ -45,7 +45,7 @@
   };
 
   networking = {
-    hostName = "ben-desktop";
+    hostName = "redviper";
     firewall = {
       allowedTCPPorts = [11434]; # ollama
     };
