@@ -38,7 +38,10 @@
     kubectl,
     stylix,
     ...
-  } @ inputs: let
+  }: let
+    inputs = {
+      inherit self nixpkgs nixpkgs-unstable nixos-hardware home-manager neovim-plugins xenon kubectl stylix;
+    };
     inherit (self) outputs;
     forAllSystems = nixpkgs.lib.genAttrs ["aarch64-linux" "x86_64-linux"];
     overlays = [
