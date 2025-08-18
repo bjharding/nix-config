@@ -5,7 +5,7 @@ pkgs.mkShellNoCC {
     selene
     stylua
     statix
-    nixpkgs-fmt
+    alejandra
     yamllint
   ];
 }

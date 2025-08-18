@@ -33,5 +33,5 @@ jobs:
       - name: Lint nix (statix)
         run: statix check
 
-      - name: Lint nix (nixpkgs-fmt)
-        run: nixpkgs-fmt --check .
+       - name: Lint nix (alejandra)
+         run: alejandra --check .

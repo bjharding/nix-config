@@ -70,7 +70,7 @@
       lint = nixpkgs.legacyPackages.${system}.callPackage ./shells/lint.nix {};
     });
 
-    formatter = forAllSystems (system: nixpkgs.legacyPackages."${system}".nixpkgs-fmt);
+    formatter = forAllSystems (system: nixpkgs.legacyPackages."${system}".alejandra);
 
     templates = import ./templates;
 
