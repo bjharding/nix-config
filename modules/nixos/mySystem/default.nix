@@ -7,19 +7,9 @@
   ...
 }: let
   cfg = config.mySystem;
-  substituters = {
-    # nasgul = {
-    #   url = "https://cache.local.longerhv.xyz/";
-    #   key = "cache.local.longerhv.xyz:ioE/YEOpla3uyof/kZQG+gNKgeBAhOMWh+riRAEzKDA=";
-    # };
-    # mordor = {
-    #   url = "http://mordor.lan:5000";
-    #   key = "mordor.lan:fY4rXQ7QqtaxsokDAA57U0kuXvlo9pzn3XgLs79TZX4";
-    # };
-  };
+  substituters = {};
 in {
   imports = [
-    # ./android.nix
     ./fonts.nix
     ./gaming.nix
     ./gnome.nix
@@ -37,17 +27,8 @@ in {
   };
 
   config = {
-    # hardware.enableRedistributableFirmware = lib.mkDefault true;
-
-    # boot.tmp.useTmpfs = lib.mkDefault true;
-    # zramSwap.enable = lib.mkDefault true;
-
     time.timeZone = lib.mkDefault "Australia/Sydney";
     i18n.defaultLocale = lib.mkDefault "en_AU.UTF-8";
-    # console = {
-    #   font = lib.mkDefault "Lat2-Terminus16";
-    #   keyMap = lib.mkDefault "pl";
-    # };
 
     nixpkgs = {
       inherit overlays;
@@ -58,11 +39,6 @@ in {
       extraOptions = ''
         experimental-features = nix-command flakes
       '';
-      #   extraOptions = ''
-      #     experimental-features = nix-command flakes
-      #   '' + lib.optionalString (config.age.secrets ? "extra_access_tokens") ''
-      #     !include ${config.age.secrets.extra_access_tokens.path}
-      #   '';
       registry = lib.mapAttrs (_: value: {flake = value;}) inputs;
       nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
       gc = {
@@ -84,13 +60,11 @@ in {
 
     environment = {
       systemPackages = with pkgs; [
-        # agenix
         git
         dnsutils
         pciutils
       ];
       shells = [pkgs.zsh];
-      #   pathsToLink = [ "/share/zsh" ];
     };
   };
 }
