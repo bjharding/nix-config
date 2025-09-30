@@ -40,10 +40,7 @@ in {
         ];
       };
     };
-    programs.neovim = {
-      enable = true;
-      defaultEditor = true;
-    };
+    # programs.neovim.defaultEditor = true;
     programs.zsh = {
       enable = true; # Workaround for https://github.com/nix-community/home-manager/issues/2751
       enableCompletion = false;

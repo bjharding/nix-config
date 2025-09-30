@@ -9,8 +9,8 @@
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    neovim-plugins = {
-      url = "github:LongerHV/neovim-plugins-overlay";
+    neovim-config = {
+      url = "github:bjharding/neovim-config";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     xenon = {
@@ -33,23 +33,22 @@
     nixpkgs-unstable,
     nixos-hardware,
     home-manager,
-    neovim-plugins,
+    neovim-config,
     xenon,
     kubectl,
     stylix,
     ...
   }: let
     inputs = {
-      inherit self nixpkgs nixpkgs-unstable nixos-hardware home-manager neovim-plugins xenon kubectl stylix;
+      inherit self nixpkgs nixpkgs-unstable nixos-hardware home-manager neovim-config xenon kubectl stylix;
     };
     inherit (self) outputs;
     forAllSystems = nixpkgs.lib.genAttrs ["aarch64-linux" "x86_64-linux"];
     overlays = [
-      neovim-plugins.overlays.default
       kubectl.overlays.default
       (final: prev: {
         unstable = nixpkgs-unstable.legacyPackages.${prev.system};
-        inherit (nixpkgs-unstable.legacyPackages.${prev.system}) neovim-unwrapped;
+        # inherit (nixpkgs-unstable.legacyPackages.${prev.system}) neovim-unwrapped;
       })
     ];
     nixosModules = import ./modules/nixos;

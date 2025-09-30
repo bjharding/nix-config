@@ -33,6 +33,13 @@
   services = {
     xserver.videoDrivers = ["nvidia"];
 
+    ollama = {
+      enable = true;
+      acceleration = "cuda";
+      host = "0.0.0.0";
+      port = 11434;
+    };
+
     # https://www.reddit.com/r/NixOS/comments/1bq2bx4/beginners_guide_to_sunshine_gamedesktop_streaming/
     avahi.publish.enable = true;
     avahi.publish.userServices = true;
@@ -47,7 +54,6 @@
   networking = {
     hostName = "redviper";
     firewall = {
-      allowedTCPPorts = [11434]; # ollama
     };
   };
 

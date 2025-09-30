@@ -6,7 +6,7 @@
     ./eza.nix
     ./gnome
     ./llm.nix
-    ./neovim
+    ./neovim.nix
     ./non-nixos.nix
     ./productivity.nix
     ./tealdeer.nix

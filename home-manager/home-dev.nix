@@ -14,13 +14,12 @@
     zsh.enable = true;
     neovim = {
       enable = true;
-      enableLSP = true;
     };
   };
 
-  nixpkgs.overlays = [
-    (final: prev: {kubectl = prev.kubectl_1_27;})
-  ];
+  # nixpkgs.overlays = [
+  #   (final: prev: {kubectl = prev.kubectl_1_27;})
+  # ];
 
   # Workaround for freezing during activity switching on Ubuntu
   # dconf.settings."org/gnome/desktop/interface".enable-animations = false;

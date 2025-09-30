@@ -1,8 +1,6 @@
 {
   myHome = {
-    neovim = {
-      enable = true;
-    };
+    neovim.enable = true;
     zsh.enable = true;
   };
 }
